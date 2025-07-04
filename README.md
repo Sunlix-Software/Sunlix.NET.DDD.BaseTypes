@@ -1,0 +1,1 @@
+# Sunlix.NET.DDD.BaseTypes
