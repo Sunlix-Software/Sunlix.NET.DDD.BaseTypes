@@ -1,7 +1,4 @@
-﻿
-using static Sunlix.NET.DDD.BaseTypes.Tests.IdEqualityComparerTests;
-
-namespace Sunlix.NET.DDD.BaseTypes.Tests
+﻿namespace Sunlix.NET.DDD.BaseTypes.Tests
 {
     public class IdEqualityComparerTests
     {
@@ -10,7 +7,7 @@ namespace Sunlix.NET.DDD.BaseTypes.Tests
         {
             var sut = Entity<string>.IdEqualityComparer;
             var entity = new TestEntity("ae61412c-0bab-47f0-82f7-39520ede5639");
-            
+
             sut.Equals(entity, entity).Should().BeTrue();
         }
 
@@ -19,7 +16,7 @@ namespace Sunlix.NET.DDD.BaseTypes.Tests
         {
             var sut = Entity<string>.IdEqualityComparer;
             var entity = new TestEntity("ae61412c-0bab-47f0-82f7-39520ede5639");
-            
+
             sut.Equals(entity, null).Should().BeFalse();
         }
 
