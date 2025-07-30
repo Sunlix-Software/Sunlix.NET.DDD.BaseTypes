@@ -7,7 +7,7 @@ namespace Sunlix.NET.DDD.BaseTypes.Tests
         public void ValueObject_should_not_be_equal_to_null()
         {
             var sut = new TestValueObject(10, "test string");
-            
+
             sut.Equals(null).Should().BeFalse();
             sut?.Equals((object?)null).Should().BeFalse();
         }
@@ -16,7 +16,7 @@ namespace Sunlix.NET.DDD.BaseTypes.Tests
         public void ValueObject_should_be_equal_to_itself()
         {
             var sut = new TestValueObject(10, "test string");
-            
+
             sut.Equals(sut).Should().BeTrue();
             sut.Equals((object)sut).Should().BeTrue();
         }
@@ -83,7 +83,7 @@ namespace Sunlix.NET.DDD.BaseTypes.Tests
         public void Equality_operator_should_return_false_when_one_value_object_is_null()
         {
             var sut = new TestValueObject(10, "test string");
-            
+
             (sut == null).Should().BeFalse();
             (null == sut).Should().BeFalse();
         }
@@ -92,7 +92,7 @@ namespace Sunlix.NET.DDD.BaseTypes.Tests
         public void Inequality_operator_should_return_true_when_one_value_object_is_null()
         {
             var sut = new TestValueObject(10, "test string");
-            
+
             (sut != null).Should().BeTrue();
             (null != sut).Should().BeTrue();
         }
@@ -147,7 +147,7 @@ namespace Sunlix.NET.DDD.BaseTypes.Tests
         {
             var sut = new TestValueObject(10, "test string");
             var other = new TestValueObject(100, "test string");
-            
+
             (sut != other).Should().BeTrue();
         }
 

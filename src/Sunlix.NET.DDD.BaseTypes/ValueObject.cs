@@ -18,7 +18,7 @@
         public override int GetHashCode()
         {
             if (_cachedHashCode.HasValue) return _cachedHashCode.Value;
-            
+
             _cachedHashCode = GetEqualityComponents()
                 .Prepend(UnproxiedType)
                 .Aggregate(new HashCode(), (hash, component) =>
