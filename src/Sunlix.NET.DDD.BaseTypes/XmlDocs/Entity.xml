@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<doc>
+  <members>
+
+    <!-- ======= Documentation for Entity<TId> class ======= -->
+    <member name="T:Entity">
+      <summary>
+        Represents the base class for all entities in the domain model.
+      </summary>
+      <typeparam name="TId">The type of the entity's identifier.</typeparam>
+      <remarks>
+        <para>
+          Entity has a unique identity defined by an identifier of type <typeparamref name="TId"/>.
+        </para>
+        <para>
+          For more details, see the <see href="#">official documentation</see>.
+        </para>
+      </remarks>
+    </member>
+
+    <!-- ======= Documentation for Entity<TId> class ======= -->
+    <member name="T:Entity">
+      <summary>
+        Represents the base class for all entities in the domain model.
+      </summary>
+      <typeparam name="TId">The type of the entity's identifier.</typeparam>
+      <remarks>
+        <para>
+          Entity has a unique identity defined by an identifier of type <typeparamref name="TId"/>.
+        </para>
+        <para>
+          For more details, see the <see href="#">official documentation</see>.
+        </para>
+      </remarks>
+    </member>
+
+    <!-- ======= Documentation for parameterless constructor Entity() ======= -->
+    <member name="M:Entity.#ctor">
+      <summary>
+        Initializes a new instance of the <see cref="T:Entity"/> class.
+      </summary>
+      <remarks>
+        <para>
+          The parameterless constructor does not initialize the entity's identifier. It is intended for use by serializers or ORM tools that require a default constructor.
+        </para>
+      </remarks>
+    </member>
+
+    <!-- ======= Documentation for constructor Entity(TId id) ======= -->
+    <member name="M:Entity.#ctor(`0)">
+      <summary>
+        Initializes a new instance of the <see cref="T:Entity"/> class with the specified identifier.
+      </summary>
+      <param name="id">The unique identifier of the entity.</param>
+      <remarks>
+        <para>
+          This constructor assigns the provided identifier to the entity.
+        </para>
+        <para>
+          The identifier must not be the default value of type <typeparamref name="TId"/>; otherwise, an exception will be thrown.
+        </para>
+        <para>
+          For more details, see the <see href="https://github.com/SunlixSoftware/docs/blob/main/ValueObject.md">official documentation</see>.
+        </para>
+      </remarks>
+    </member>
+
+    <!-- ======= Documentation for Id property ======= -->
+    <member name="P:Entity.Id">
+      <summary>
+        Unique identifier of the entity.
+      </summary>
+      <value>
+        The identifier of type <typeparamref name="TId"/>.
+      </value>
+      <remarks>
+        <para>
+          For more details, see the <see href="#">official documentation</see>.
+        </para>
+      </remarks>
+    </member>
+
+    <!-- ======= Documentation for IsTransient() method ======= -->
+    <member name="M:Entity.IsTransient">
+      <summary>
+        Determines whether an entity id is defined.
+      </summary>
+      <returns>
+        <c>true</c> if an entity id is null or default; otherwise, <c>false</c>.
+      </returns>
+      <remarks>
+        <para>
+          For more details, see the <see href="#">official documentation</see>.
+        </para>
+      </remarks>
+    </member>
+
+    <!-- ======= Documentation for UnproxiedType property ======= -->
+    <member name="P:UnproxiedType">
+      <summary>
+        Gets the type used to determine equality between entities.
+      </summary>
+      <returns>
+        The <see cref="System.Type"/> that defines the unproxied type of the current entity.
+      </returns>
+      <remarks>
+        <para>
+          By default, this property returns the runtime type of the object via <see cref="object.GetType"/>.<br/>
+          Derived classes can override this behavior to return an unproxied type, e.g., to avoid using of EF Core lazy-loading proxy type.
+        </para>
+        <para>
+          This property is used in equality checks to ensure that entities are of the same conceptual type.
+        </para>
+        <para>
+          For more details, see the <see href="https://github.com/SunlixSoftware/docs/blob/main/ValueObject.md">official documentation</see>.
+        </para>
+      </remarks>
+    </member>
+
+    <!-- ======= Documentation for IdEqualityComparer property ======= -->
+    <member name="P:IdEqualityComparer">
+      <summary>
+        Provides the equality comparer that determines equality of entities by their unproxied types and identifiers.
+      </summary>
+      <returns>
+        <see cref="System.Collections.Generic.IEqualityComparer{T}"/>
+        where <c>T</c> is <see cref="Sunlix.NET.Primitives.Entity{TId}"/>
+      </returns>
+      <remarks>
+        <para>
+          For more details, see the <see href="https://github.com/SunlixSoftware/docs/blob/main/ValueObject.md">official documentation</see>.
+        </para>
+      </remarks>
+    </member>
+
+  </members>
+</doc>
+
