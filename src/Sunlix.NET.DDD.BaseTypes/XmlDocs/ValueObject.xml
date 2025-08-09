@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<doc>
+  <members>
+
+    <!-- ======= Documentation for ValueObject class ======= -->
+    <member name="T:ValueObject">
+      <summary>
+        Represents the base class for all value objects in the domain model.
+      </summary>
+      <remarks>
+        <para>
+          For more details, see the <see href="https://github.com/SunlixSoftware/docs/blob/main/ValueObject.md">official documentation</see>.
+        </para>
+      </remarks>
+    </member>
+
+    <!-- ======= Documentation for Equals(ValueObject) method ======= -->
+    <member name="M:Equals(ValueObject)">
+      <summary>
+        Determines whether <paramref name="other"/> is equal to this value object according to its equality contract.
+      </summary>
+      <param name="other">
+        The value object to compare with the current instance.
+      </param>
+      <returns>
+        <c>true</c> if <paramref name="other"/> is equal to this instance; otherwise, <c>false</c>.
+      </returns>
+      <remarks>
+        Equality follows these rules:
+        <list type="bullet">
+          <item>
+            <description>
+              If <paramref name="other"/> is the same reference as the current instance, returns <c>true</c>.
+            </description>
+          </item>
+          <item>
+            <description>
+              If <paramref name="other"/> is <c>null</c>, returns <c>false</c>.
+            </description>
+          </item>
+          <item>
+            <description>
+              Both objects must share the same <see cref="UnproxiedType"/>.
+            </description>
+          </item>
+          <item>
+            <description>
+              All components returned by <see cref="GetEqualityComponents"/> must be pairwise equal (sequence equality; same order and count).<br/>
+              Component comparison uses their default equality; <c>null</c> components are allowed.
+            </description>
+          </item>
+        </list>
+        <para>
+          For details, see the <see href="https://github.com/SunlixSoftware/docs/blob/main/ValueObject.md">official documentation</see>.
+        </para>
+      </remarks>
+    </member>
+
+    <!-- ======= Documentation for Equals(System.Object?) method ======= -->
+    <member name="M:Equals(System.Object)">
+      <summary>
+        Determines whether the specified <see cref="object"/> is equal to the current instance.
+      </summary>
+      <param name="obj">
+        The object to compare with the current instance.
+      </param>
+      <returns>
+        <c>true</c> if the specified object is equal to the current value object; otherwise, <c>false</c>.
+      </returns>
+      <remarks>
+        Equality follows these rules:
+        <list type="bullet">
+          <item>
+            <description>
+              If <paramref name="obj"/> is the same reference as the current instance, returns <c>true</c>.
+            </description>
+          </item>
+          <item>
+            <description>
+              If <paramref name="obj"/> is <c>null</c> or is not a <see cref="ValueObject"/>, returns <c>false</c>.
+            </description>
+          </item>
+          <item>
+            <description>
+              Both objects must share the same <see cref="UnproxiedType"/>.
+            </description>
+          </item>
+          <item>
+            <description>
+              All components returned by <see cref="GetEqualityComponents"/> must be pairwise equal (sequence equality; same order and count).<br/>
+            Component comparison uses their default equality; <c>null</c> components are allowed.
+          </description>
+          </item>
+        </list>
+        <para>
+          For more details, see the <see href="https://github.com/SunlixSoftware/docs/blob/main/ValueObject.md">official documentation</see>.
+        </para>
+      </remarks>
+    </member>
+
+    <!-- ======= Documentation for GetHashCode method ======= -->
+    <member name="M:GetHashCode">
+      <summary>
+        Returns a hash code for the current <see cref="ValueObject"/>.
+      </summary>
+      <returns>
+        A hash code derived from the unproxied type and all components returned by <see cref="GetEqualityComponents"/>.
+      </returns>
+      <remarks>
+        This method uses the same components as <see cref="Equals(ValueObject)"/> to ensure that two equal value objects<br/>
+        always produce the same hash code, satisfying the <see cref="object.GetHashCode"/> contract.
+        <para>
+          For more details, see the <see href="https://github.com/SunlixSoftware/docs/blob/main/ValueObject.md">official documentation</see>.
+        </para>
+      </remarks>
+    </member>
+
+    <!-- ======= Documentation for UnproxiedType property ======= -->
+    <member name="P:UnproxiedType">
+      <summary>
+        Gets the type used to determine equality between value objects.
+      </summary>
+      <returns>
+        The <see cref="System.Type"/> that defines the unproxied type of the current entity.
+      </returns>
+      <remarks>
+        <para>
+          By default, this property returns the runtime type of the object via <see cref="object.GetType"/>.<br/>
+          Derived classes can override this behavior to return an unproxied type, e.g., to avoid using of EF Core lazy-loading proxy type.
+        </para>
+        <para>
+          This property is used in equality checks to ensure that value objects are of the same conceptual type.
+        </para>
+        <para>
+          For more details, see the <see href="https://github.com/SunlixSoftware/docs/blob/main/ValueObject.md">official documentation</see>.
+        </para>
+      </remarks>
+    </member>
+
+    <!-- ======= Documentation for GetEqualityComponents method ======= -->
+    <member name="M:GetEqualityComponents">
+      <summary>
+        Returns the sequence of components that are used to determine equality for this <see cref="ValueObject"/>.
+      </summary>
+      <returns>
+        An ordered sequence of components that participate in equality and hash code calculations.
+      </returns>
+      <remarks>
+        <para>
+          Derived classes must override this method to return all properties that define the value object's identity.
+          The order of the returned components matters and must be consistent across calls.
+        </para>
+        <para>
+          The same components returned here are also used by <see cref="GetHashCode"/> to ensure that equal value objects
+          have the same hash code.
+        </para>
+      </remarks>
+    </member>
+
+  </members>
+</doc>
