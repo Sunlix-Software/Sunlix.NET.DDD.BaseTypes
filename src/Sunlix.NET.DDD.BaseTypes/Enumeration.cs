@@ -79,9 +79,6 @@ namespace Sunlix.NET.DDD.BaseTypes
         /// <include file="XmlDocs/Enumeration.xml" path="doc/members/member[@name='M:Enumeration.GetAll']/*" />
         public static IEnumerable<T> GetAll() => EnumerationValues.Values;
 
-        /// <include file="XmlDocs/Enumeration.xml" path="doc/members/member[@name='M:Enumeration.GetHashCode']/*" />
-        public override int GetHashCode() => HashCode.Combine(UnproxiedType, Value);
-
         /// <include file="XmlDocs/Enumeration.xml" path="doc/members/member[@name='M:Enumeration.CompareTo(Enumeration)']/*" />
         public int CompareTo(Enumeration<T>? other) => other is null ? 1 : Value.CompareTo(other.Value);
 

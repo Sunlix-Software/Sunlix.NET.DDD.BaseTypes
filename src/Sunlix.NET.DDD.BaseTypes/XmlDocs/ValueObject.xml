@@ -104,11 +104,11 @@
         Returns a hash code for the current <see cref="ValueObject"/>.
       </summary>
       <returns>
-        A hash code derived from the unproxied type and all components returned by <see cref="GetEqualityComponents"/>.
+        A hash code derived from the <see cref="UnproxiedType"/> and all components returned by <see cref="GetEqualityComponents"/>.
       </returns>
       <remarks>
         This method uses the same components as <see cref="Equals(ValueObject)"/> to ensure that two equal value objects<br/>
-        always produce the same hash code, satisfying the <see cref="object.GetHashCode"/> contract.
+        always produce the same hash code.
         <para>
           For more details, see the <see href="https://github.com/SunlixSoftware/docs/blob/main/ValueObject.md">official documentation</see>.
         </para>

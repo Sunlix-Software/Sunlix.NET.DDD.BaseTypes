@@ -11,7 +11,10 @@
       <remarks>
         <para>
           Equality semantics: two <see cref="Enumeration{T}"/> instances are equal if and only if
-          they share the same equality contract type and have the same <see cref="P:Value"/>.
+          they share the same <see cref="ValueObject.UnproxiedType"/> and have the same <see cref="Value"/>.
+        </para>
+        <para>
+          For more details, see the <see href="https://github.com/SunlixSoftware/docs/blob/main/ValueObject.md">official documentation</see>.
         </para>
       </remarks>
     </member>
@@ -24,6 +27,9 @@
       <value>
         A unique integer value representing the enumeration instance.
       </value>
+      <para>
+        For more details, see the <see href="https://github.com/SunlixSoftware/docs/blob/main/ValueObject.md">official documentation</see>.
+      </para>
     </member>
 
     <!-- ======= Documentation for Name property ======= -->
@@ -34,6 +40,9 @@
       <value>
         A unique string representing the enumeration instance.
       </value>
+      <para>
+        For more details, see the <see href="https://github.com/SunlixSoftware/docs/blob/main/ValueObject.md">official documentation</see>.
+      </para>
     </member>
     
     <!-- ======= Documentation for Enumeration(int, string) constructor ======= -->
@@ -54,6 +63,9 @@
         <para>
           Throws <see cref="System.ArgumentException"/> if <paramref name="name"/> is null or whitespace.
         </para>
+        <para>
+          For more details, see the <see href="https://github.com/SunlixSoftware/docs/blob/main/ValueObject.md">official documentation</see>.
+        </para>
       </remarks>
       <exception cref="System.ArgumentException"></exception>
     </member>
@@ -73,6 +85,9 @@
           Throws <see cref="System.InvalidOperationException"/> if no enumeration instance with the specified
           <paramref name="value"/> exists in the derived type.
         </para>
+        <para>
+          For more details, see the <see href="https://github.com/SunlixSoftware/docs/blob/main/ValueObject.md">official documentation</see>.
+        </para>
       </remarks>
       <exception cref="System.InvalidOperationException"></exception>
     </member>
@@ -87,6 +102,11 @@
       <returns>
         <c>true</c> if an enumeration instance with the specified value exists; otherwise, <c>false</c>.
       </returns>
+      <remarks>
+        <para>
+          For more details, see the <see href="https://github.com/SunlixSoftware/docs/blob/main/ValueObject.md">official documentation</see>.
+        </para>
+      </remarks>
     </member>
 
     <!-- ======= Documentation for FromName(string) method ======= -->
@@ -103,6 +123,9 @@
           Throws <see cref="System.InvalidOperationException"/> if no enumeration instance with the specified
           <paramref name="name"/> exists in the derived type.
         </para>
+        <para>
+          For more details, see the <see href="https://github.com/SunlixSoftware/docs/blob/main/ValueObject.md">official documentation</see>.
+        </para>
       </remarks>
       <exception cref="System.InvalidOperationException"></exception>
     </member>
@@ -117,6 +140,11 @@
       <returns>
         <c>true</c> if an enumeration instance with the specified name exists; otherwise, <c>false</c>.
       </returns>
+      <remarks>
+        <para>
+          For more details, see the <see href="https://github.com/SunlixSoftware/docs/blob/main/ValueObject.md">official documentation</see>.
+        </para>
+      </remarks>
     </member>
 
     <!-- ======= Documentation for Exists(int) method ======= -->
@@ -128,6 +156,11 @@
       <returns>
         <c>true</c> if an enumeration instance with the specified value exists; otherwise, <c>false</c>.
       </returns>
+      <remarks>
+        <para>
+          For more details, see the <see href="https://github.com/SunlixSoftware/docs/blob/main/ValueObject.md">official documentation</see>.
+        </para>
+      </remarks>
     </member>
 
     <!-- ======= Documentation for Exists(string) method ======= -->
@@ -139,9 +172,14 @@
       <returns>
         <c>true</c> if an enumeration instance with the specified name exists; otherwise, <c>false</c>.
       </returns>
+      <remarks>
+        <para>
+          For more details, see the <see href="https://github.com/SunlixSoftware/docs/blob/main/ValueObject.md">official documentation</see>.
+        </para>
+      </remarks>
     </member>
 
-    <!-- ======= Documentation for GetAll method ======= -->
+    <!-- ======= Documentation for GetAll() method ======= -->
     <member name="M:Enumeration.GetAll">
       <summary>
         Retrieves all available enumeration instances of the current type.
@@ -149,16 +187,11 @@
       <returns>
         A collection of all enumeration instances.
       </returns>
-    </member>
-
-    <!-- ======= Documentation for GetHashCode method ======= -->
-    <member name="M:Enumeration.GetHashCode">
-      <summary>
-        Returns a hash code for the current <see cref="Enumeration{T}"/>.
-      </summary>
-      <returns>
-        A hash code based on the <see cref="ValueObject.UnproxiedType"/> and <see cref="Value"/>.
-      </returns>
+      <remarks>
+        <para>
+          For more details, see the <see href="https://github.com/SunlixSoftware/docs/blob/main/ValueObject.md">official documentation</see>.
+        </para>
+      </remarks>
     </member>
 
     <!-- ======= Documentation for CompareTo(Enumeration<T>) method ======= -->
@@ -170,6 +203,11 @@
       <returns>
         A value indicating the relative order of the enumerations.
       </returns>
+      <remarks>
+        <para>
+          For more details, see the <see href="https://github.com/SunlixSoftware/docs/blob/main/ValueObject.md">official documentation</see>.
+        </para>
+      </remarks>
     </member>
 
     <!-- ======= Documentation for CompareTo(object?) method ======= -->
@@ -185,11 +223,14 @@
         <para>
           Throws <see cref="System.ArgumentException"/> if the object is not of type <see cref="Enumeration{T}"/>.
         </para>
+        <para>
+          For more details, see the <see href="https://github.com/SunlixSoftware/docs/blob/main/ValueObject.md">official documentation</see>.
+        </para>
       </remarks>
       <exception cref="System.ArgumentException"></exception>
     </member>
 
-    <!-- ======= Documentation for ToString method ======= -->
+    <!-- ======= Documentation for ToString() method ======= -->
     <member name="M:ToString">
       <summary>
         Returns the display name of the enumeration instance.
@@ -197,9 +238,14 @@
       <returns>
         The value of the <see cref="Name"/> property.
       </returns>
+      <remarks>
+        <para>
+          For more details, see the <see href="https://github.com/SunlixSoftware/docs/blob/main/ValueObject.md">official documentation</see>.
+        </para>
+      </remarks>
     </member>
 
-    <!-- ======= Documentation for GetEqualityComponents method (Enumeration<T>) ======= -->
+    <!-- ======= Documentation for GetEqualityComponents() method ======= -->
     <member name="M:GetEqualityComponents">
       <summary>
         Returns the sequence of components used to determine equality for this enumeration.
@@ -209,8 +255,11 @@
       </returns>
       <remarks>
         <para>
-          Equality for <see cref="Enumeration{T}"/> is based on the unproxied type and <see cref="Value"/>.
-          The same components are also used by <see cref="GetHashCode"/> so that equal instances produce the same hash code.
+          Equality for <see cref="Enumeration{T}"/> is based on the <see cref="ValueObject.UnproxiedType"/> and <see cref="Value"/>.
+          The same components are also used by <see cref="ValueObject.GetHashCode"/> so that equal instances produce the same hash code.
+        </para>
+        <para>
+          For more details, see the <see href="https://github.com/SunlixSoftware/docs/blob/main/ValueObject.md">official documentation</see>.
         </para>
       </remarks>
     </member>

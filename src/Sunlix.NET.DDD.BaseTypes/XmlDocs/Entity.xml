@@ -18,26 +18,10 @@
       </remarks>
     </member>
 
-    <!-- ======= Documentation for Entity<TId> class ======= -->
-    <member name="T:Entity">
-      <summary>
-        Represents the base class for all entities in the domain model.
-      </summary>
-      <typeparam name="TId">The type of the entity's identifier.</typeparam>
-      <remarks>
-        <para>
-          Entity has a unique identity defined by an identifier of type <typeparamref name="TId"/>.
-        </para>
-        <para>
-          For more details, see the <see href="#">official documentation</see>.
-        </para>
-      </remarks>
-    </member>
-
-    <!-- ======= Documentation for parameterless constructor Entity() ======= -->
+    <!-- ======= Documentation for constructor Entity() ======= -->
     <member name="M:Entity.#ctor">
       <summary>
-        Initializes a new instance of the <see cref="T:Entity"/> class.
+        Initializes a new instance of the <see cref="Entity{TId}"/> class.
       </summary>
       <remarks>
         <para>
@@ -46,10 +30,10 @@
       </remarks>
     </member>
 
-    <!-- ======= Documentation for constructor Entity(TId id) ======= -->
+    <!-- ======= Documentation for constructor Entity(TId) ======= -->
     <member name="M:Entity.#ctor(`0)">
       <summary>
-        Initializes a new instance of the <see cref="T:Entity"/> class with the specified identifier.
+        Initializes a new instance of the <see cref="Entity{TId}"/> class with the specified identifier.
       </summary>
       <param name="id">The unique identifier of the entity.</param>
       <remarks>
@@ -57,12 +41,13 @@
           This constructor assigns the provided identifier to the entity.
         </para>
         <para>
-          The identifier must not be the default value of type <typeparamref name="TId"/>; otherwise, an exception will be thrown.
+          Throws <see cref="System.ArgumentException"/> if <paramref name="id"/> is null or default.
         </para>
         <para>
           For more details, see the <see href="https://github.com/SunlixSoftware/docs/blob/main/ValueObject.md">official documentation</see>.
         </para>
       </remarks>
+      <exception cref="System.ArgumentException"></exception>
     </member>
 
     <!-- ======= Documentation for Id property ======= -->
@@ -73,21 +58,6 @@
       <value>
         The identifier of type <typeparamref name="TId"/>.
       </value>
-      <remarks>
-        <para>
-          For more details, see the <see href="#">official documentation</see>.
-        </para>
-      </remarks>
-    </member>
-
-    <!-- ======= Documentation for IsTransient() method ======= -->
-    <member name="M:IsTransient">
-      <summary>
-        Determines whether the current entity is <em>transient</em>, meaning it has not been assigned a persistent identifier.
-      </summary>
-      <returns>
-        <c>true</c> if the entity id is null or default; otherwise, <c>false</c>.
-      </returns>
       <remarks>
         <para>
           For more details, see the <see href="#">official documentation</see>.
@@ -120,7 +90,7 @@
     <!-- ======= Documentation for IdEqualityComparer property ======= -->
     <member name="P:IdEqualityComparer">
       <summary>
-        Provides the equality comparer that determines equality of entities by their unproxied types and identifiers.
+        Provides the equality comparer that determines equality of entities by their <see cref="UnproxiedType"/> and <see cref="Id"/>.
       </summary>
       <returns>
         <see cref="System.Collections.Generic.IEqualityComparer{T}"/>
@@ -129,6 +99,21 @@
       <remarks>
         <para>
           For more details, see the <see href="https://github.com/SunlixSoftware/docs/blob/main/ValueObject.md">official documentation</see>.
+        </para>
+      </remarks>
+    </member>
+
+    <!-- ======= Documentation for IsTransient() method ======= -->
+    <member name="M:IsTransient">
+      <summary>
+        Determines whether the current entity is <em>transient</em>, meaning it has not been assigned a persistent identifier.
+      </summary>
+      <returns>
+        <c>true</c> if the entity id is null or default; otherwise, <c>false</c>.
+      </returns>
+      <remarks>
+        <para>
+          For more details, see the <see href="#">official documentation</see>.
         </para>
       </remarks>
     </member>
