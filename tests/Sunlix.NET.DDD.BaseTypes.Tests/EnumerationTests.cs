@@ -115,8 +115,8 @@
         {
             Action act = () => Enumeration<TestEnumeration>.FromValue(-1);
 
-            act.Should().Throw<ArgumentException>()
-                .WithMessage("Invalid enumeration value: '-1'. Expected a non-negative value. (Parameter 'value')");
+            act.Should().Throw<InvalidOperationException>()
+                .WithMessage("Enumeration value '-1' is not valid for Sunlix.NET.DDD.BaseTypes.Tests.TestEnumeration.");
         }
 
         [Theory]
@@ -170,8 +170,8 @@
         {
             Action act = () => Enumeration<TestEnumeration>.FromName(name!);
 
-            act.Should().Throw<ArgumentException>()
-                .WithMessage("Enumeration name should not be null, empty, or contain only whitespace. (Parameter 'name')");
+            act.Should().Throw<InvalidOperationException>()
+                .WithMessage($"Enumeration name '{name}' is not valid for Sunlix.NET.DDD.BaseTypes.Tests.TestEnumeration.");
         }
 
         [Theory]

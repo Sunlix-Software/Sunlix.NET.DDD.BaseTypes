@@ -9,7 +9,7 @@
         protected virtual Type UnproxiedType => GetType();
 
         /// <include file="XmlDocs/ValueObject.xml" path="doc/members/member[@name='M:Equals(ValueObject)']/*" />
-        public bool Equals(ValueObject? other)
+        public virtual bool Equals(ValueObject? other)
         {
             if (other is null) return false;
             if (ReferenceEquals(this, other)) return true;

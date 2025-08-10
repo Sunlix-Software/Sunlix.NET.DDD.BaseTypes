@@ -81,12 +81,12 @@
     </member>
 
     <!-- ======= Documentation for IsTransient() method ======= -->
-    <member name="M:Entity.IsTransient">
+    <member name="M:IsTransient">
       <summary>
-        Determines whether an entity id is defined.
+        Determines whether the current entity is <em>transient</em>, meaning it has not been assigned a persistent identifier.
       </summary>
       <returns>
-        <c>true</c> if an entity id is null or default; otherwise, <c>false</c>.
+        <c>true</c> if the entity id is null or default; otherwise, <c>false</c>.
       </returns>
       <remarks>
         <para>
@@ -124,7 +124,7 @@
       </summary>
       <returns>
         <see cref="System.Collections.Generic.IEqualityComparer{T}"/>
-        where <c>T</c> is <see cref="Sunlix.NET.Primitives.Entity{TId}"/>
+        where <c>T</c> is <see cref="Sunlix.NET.DDD.BaseTypes.Entity{TId}"/>
       </returns>
       <remarks>
         <para>

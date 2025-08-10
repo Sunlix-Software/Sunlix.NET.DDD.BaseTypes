@@ -1,0 +1,219 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<doc>
+  <members>
+
+    <!-- ======= Documentation for Enumeration<T> class ======= -->
+    <member name="T:Enumeration">
+      <summary>
+        Represents a base class for defining enumeration-like objects with named values.
+      </summary>
+      <typeparam name="T">The derived type that represents a specific enumeration.</typeparam>
+      <remarks>
+        <para>
+          Equality semantics: two <see cref="Enumeration{T}"/> instances are equal if and only if
+          they share the same equality contract type and have the same <see cref="P:Value"/>.
+        </para>
+      </remarks>
+    </member>
+
+    <!-- ======= Documentation for Value property ======= -->
+    <member name="P:Value">
+      <summary>
+        Gets the numeric value associated with the enumeration instance.
+      </summary>
+      <value>
+        A unique integer value representing the enumeration instance.
+      </value>
+    </member>
+
+    <!-- ======= Documentation for Name property ======= -->
+    <member name="P:Name">
+      <summary>
+        Gets the name associated with the enumeration instance.
+      </summary>
+      <value>
+        A unique string representing the enumeration instance.
+      </value>
+    </member>
+    
+    <!-- ======= Documentation for Enumeration(int, string) constructor ======= -->
+    <member name="M:Enumeration.#ctor(System.Int32,System.String)">
+      <summary>
+        Initializes a new instance of the <see cref="Enumeration{T}"/> class with the specified value and display name.
+      </summary>
+      <param name="value">
+        The value that uniquely identifies the enumeration instance.
+      </param>
+      <param name="name">
+        The display name of the enumeration instance. Cannot be <c>null</c>, empty, or whitespace.
+      </param>
+      <remarks>
+        <para>
+          Throws <see cref="System.ArgumentException"/> if <paramref name="value"/> is negative.
+        </para>
+        <para>
+          Throws <see cref="System.ArgumentException"/> if <paramref name="name"/> is null or whitespace.
+        </para>
+      </remarks>
+      <exception cref="System.ArgumentException"></exception>
+    </member>
+
+
+    <!-- ======= Documentation for FromValue(int) method ======= -->
+    <member name="M:FromValue(System.Int32)">
+      <summary>
+        Retrieves an enumeration instance based on its numeric value.
+      </summary>
+      <param name="value">The numeric value of the enumeration instance.</param>
+      <returns>
+        The corresponding enumeration instance.
+      </returns>
+      <remarks>
+        <para>
+          Throws <see cref="System.InvalidOperationException"/> if no enumeration instance with the specified
+          <paramref name="value"/> exists in the derived type.
+        </para>
+      </remarks>
+      <exception cref="System.InvalidOperationException"></exception>
+    </member>
+
+    <!-- ======= Documentation for TryGetFromValue(int, out T) method ======= -->
+    <member name="M:TryGetFromValue(System.Int32,T@)">
+      <summary>
+        Attempts to retrieve an enumeration instance based on its numeric value.
+      </summary>
+      <param name="value">The numeric value of the enumeration instance.</param>
+      <param name="enumeration">When successful, contains the corresponding enumeration instance; otherwise, null.</param>
+      <returns>
+        <c>true</c> if an enumeration instance with the specified value exists; otherwise, <c>false</c>.
+      </returns>
+    </member>
+
+    <!-- ======= Documentation for FromName(string) method ======= -->
+    <member name="M:FromName(System.String)">
+      <summary>
+        Retrieves an enumeration instance based on its name.
+      </summary>
+      <param name="name">The name of the enumeration instance.</param>
+      <returns>
+        The corresponding enumeration instance.
+      </returns>
+      <remarks>
+        <para>
+          Throws <see cref="System.InvalidOperationException"/> if no enumeration instance with the specified
+          <paramref name="name"/> exists in the derived type.
+        </para>
+      </remarks>
+      <exception cref="System.InvalidOperationException"></exception>
+    </member>
+
+    <!-- ======= Documentation for TryGetFromName(string, out T) method ======= -->
+    <member name="M:TryGetFromName(System.String,T@)">
+      <summary>
+        Attempts to retrieve an enumeration instance based on its name.
+      </summary>
+      <param name="name">The name of the enumeration instance.</param>
+      <param name="enumeration">When successful, contains the corresponding enumeration instance; otherwise, null.</param>
+      <returns>
+        <c>true</c> if an enumeration instance with the specified name exists; otherwise, <c>false</c>.
+      </returns>
+    </member>
+
+    <!-- ======= Documentation for Exists(int) method ======= -->
+    <member name="M:Exists(System.Int32)">
+      <summary>
+        Determines whether an enumeration instance with the specified numeric value exists.
+      </summary>
+      <param name="value">The numeric value of the enumeration instance.</param>
+      <returns>
+        <c>true</c> if an enumeration instance with the specified value exists; otherwise, <c>false</c>.
+      </returns>
+    </member>
+
+    <!-- ======= Documentation for Exists(string) method ======= -->
+    <member name="M:Exists(System.String)">
+      <summary>
+        Determines whether an enumeration instance with the specified name exists.
+      </summary>
+      <param name="name">The name of the enumeration instance.</param>
+      <returns>
+        <c>true</c> if an enumeration instance with the specified name exists; otherwise, <c>false</c>.
+      </returns>
+    </member>
+
+    <!-- ======= Documentation for GetAll method ======= -->
+    <member name="M:Enumeration.GetAll">
+      <summary>
+        Retrieves all available enumeration instances of the current type.
+      </summary>
+      <returns>
+        A collection of all enumeration instances.
+      </returns>
+    </member>
+
+    <!-- ======= Documentation for GetHashCode method ======= -->
+    <member name="M:Enumeration.GetHashCode">
+      <summary>
+        Returns a hash code for the current <see cref="Enumeration{T}"/>.
+      </summary>
+      <returns>
+        A hash code based on the <see cref="ValueObject.UnproxiedType"/> and <see cref="Value"/>.
+      </returns>
+    </member>
+
+    <!-- ======= Documentation for CompareTo(Enumeration<T>) method ======= -->
+    <member name="M:Enumeration.CompareTo(Enumeration)">
+      <summary>
+        Compares the current enumeration instance with another instance based on their numeric values.
+      </summary>
+      <param name="other">The other enumeration instance to compare with.</param>
+      <returns>
+        A value indicating the relative order of the enumerations.
+      </returns>
+    </member>
+
+    <!-- ======= Documentation for CompareTo(object?) method ======= -->
+    <member name="M:Enumeration.CompareTo(System.Object)">
+      <summary>
+        Compares the current enumeration instance with another object.
+      </summary>
+      <param name="obj">The object to compare with.</param>
+      <returns>
+        A value indicating the relative order of the enumerations.
+      </returns>
+      <remarks>
+        <para>
+          Throws <see cref="System.ArgumentException"/> if the object is not of type <see cref="Enumeration{T}"/>.
+        </para>
+      </remarks>
+      <exception cref="System.ArgumentException"></exception>
+    </member>
+
+    <!-- ======= Documentation for ToString method ======= -->
+    <member name="M:ToString">
+      <summary>
+        Returns the display name of the enumeration instance.
+      </summary>
+      <returns>
+        The value of the <see cref="Name"/> property.
+      </returns>
+    </member>
+
+    <!-- ======= Documentation for GetEqualityComponents method (Enumeration<T>) ======= -->
+    <member name="M:GetEqualityComponents">
+      <summary>
+        Returns the sequence of components used to determine equality for this enumeration.
+      </summary>
+      <returns>
+        An ordered sequence containing the single component: <see cref="Value"/>.
+      </returns>
+      <remarks>
+        <para>
+          Equality for <see cref="Enumeration{T}"/> is based on the unproxied type and <see cref="Value"/>.
+          The same components are also used by <see cref="GetHashCode"/> so that equal instances produce the same hash code.
+        </para>
+      </remarks>
+    </member>
+
+  </members>
+</doc>

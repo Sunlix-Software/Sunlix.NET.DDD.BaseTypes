@@ -28,7 +28,7 @@
             && x.UnproxiedType == y.UnproxiedType
             && SatisfiesIdentifierEquality(x.Id, y.Id));
 
-        /// <include file="XmlDocs/Entity.xml" path="doc/members/member[@name='M:Entity.IsTransient']/*" />
+        /// <include file="XmlDocs/Entity.xml" path="doc/members/member[@name='M:IsTransient']/*" />
         public virtual bool IsTransient() => EqualityComparer<TId>.Default.Equals(Id, default);
 
         private static bool SatisfiesIdentifierEquality(TId? id, TId? otherId) =>
