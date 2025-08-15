@@ -72,3 +72,40 @@ An `Error` is a lightweight `ValueObject` that carries an error code and a human
 
 **Rule of thumb:** Use `Error` when you need a consistent error payload (store/log by `Code`, `Message`, and keep equality stable across layers).
 
+## Overview
+### Entity\<TId> with DB-generated Id
+
+```csharp
+public sealed class Book : Entity<int>
+{
+    public string Title { get; private set; }
+
+    // Parameterless constructor for ORM
+    private Book() { }
+
+    public Book(string title)
+    {
+        if (string.IsNullOrEmpty(title))
+            throw new ArgumentOutOfRangeException(nameof(title));
+        Title = title;
+    }
+}
+
+// EF Core DbContext 
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.Entity<Book>(bookBuilder =>
+    {
+        bookBuilder.ToTable("Books").HasKey(b => b.Id);
+        bookBuilder.Property(b => b.Id)
+            .ValueGeneratedOnAdd()
+            .UseIdentityColumn();
+    });
+}
+
+// Usage
+var book = new Book("Domain-Driven Design");   // Id == default (transient entity)
+context.Books.Add(book);
+await context.SaveChangesAsync();              // Id populated by EF Core             
+```
+
