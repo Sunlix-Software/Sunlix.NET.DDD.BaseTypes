@@ -75,7 +75,7 @@ An `Error` is a lightweight `ValueObject` that carries an error code and a human
 ## Usage
 This section contains small, self-contained examples that demonstrate how to use the types from **Sunlix.NET.DDD.BaseTypes**. The sample domain classes are deliberately simplified: they do not model a real domain, are not related to each other, and exist solely to illustrate the API surface. For clarity, the snippets omit nonessential infrastructure (e.g., error handling, logging, full EF Core setup) unless explicitly relevant. The examples below use **Entity Framework Core** as the ORM.
 
-### Entity with DB-generated Id
+### Implement an entity with DB-generated Id
 Use this approach when the database assigns the primary key (IDENTITY/SEQUENCE). Create the entity without an Id (parameterless constructor), let EF Core persist it, and the Id will be populated on `SaveChanges()`. Until then the entity is transient (`Id == default`). Configure EF with `ValueGeneratedOnAdd()` to indicate the Id is database-generated.
 
 ```csharp
@@ -112,7 +112,7 @@ context.Books.Add(book);
 await context.SaveChangesAsync();              // Id populated by EF Core             
 ```
 
-### Entity with app-assigned Id
+### Implement an entity with app-assigned Id
 Use this approach when your application (or an upstream system) provides the identifier (e.g., Guid, ULID, Snowflake, or a typed ID value object). Construct the entity with the Id. Configure EF with `ValueGeneratedNever()`. The entity is non-transient immediately, so Id-based comparisons via `IdEqualityComparer` are safe before persistence.
 ```csharp
 public sealed class User : Entity<Guid>
@@ -140,7 +140,7 @@ context.Users.Add(user);
 await context.SaveChangesAsync();              // Id is assigned by application           
 ```
 
-### Entity with strongly typed Id
+### Implement an entity with strongly typed Id
 Using strongly typed Ids prevents accidental mix-ups (e.g., passing a CustomerId where an OrderId is expected), makes APIs self-documenting, allows validation in one place, and still maps cleanly in EF Core via a value converter.
 
 ```csharp
@@ -212,7 +212,7 @@ You can use the comparer in dictionaries, sets, etc.
 var dict = new Dictionary<Entity<Guid>, string>(Entity<Guid>.IdEqualityComparer);           
 ```
 
-### Overriding `UnproxiedType` (optional)
+### Overriding `Entity<TId>.UnproxiedType` (optional)
 
 Override `UnproxiedType` to compare a hierarchy as one conceptual type (e.g., treat all Payment subclasses as the same concept). Ensure Ids are unique across the hierarchy before unifying types like this.
 
@@ -228,7 +228,7 @@ public sealed class BankTransfer : Payment { }
 ```
 
 #### Proxy note (EF Core & NHibernate).
-ORMs create lazy-loading proxies for entities. The entity base class default implementation `UnproxiedType => GetType()` will return the proxy type, not the domain type. Since `IdEqualityComparer` compares entities by `UnproxiedType + Id`, a proxy and a non-proxy instance of the same entity may compare as different if you keep the default.
+ORMs create lazy-loading proxies for loaded objects. The entity base class default implementation `UnproxiedType => GetType()` will return the proxy type, not the domain type in this scenario. Since `IdEqualityComparer` compares entities by `UnproxiedType + Id`, a proxy and a non-proxy instance of the same entity may compare as different if you keep the default. You can override `UnproxiedType` to overcome this issue.
 
 To avoid this, override `UnproxiedType` in the derived class to return the real domain type:
 ```csharp
@@ -237,3 +237,86 @@ public sealed class Order : Entity<int>
     protected override Type UnproxiedType => typeof(Order);
 }
 ```
+
+### Implement a value object
+
+Define the value’s data and return its significant parts from `GetEqualityComponents()`.  
+Equality is structural: `a.Equals(b)` returns true only if both conditions hold:
+* `a.UnproxiedType == b.UnproxiedType`
+* `a.GetEqualityComponents()` and `b.GetEqualityComponents()` are sequence-equal — same length, same order, and pairwise-equal components.
+
+```csharp
+public sealed class Money : ValueObject
+{
+    public decimal Amount { get; }
+    public string Currency { get; }
+
+    public Money(decimal amount, string currency)
+    {
+        if (amount < 0)
+            throw new ArgumentOutOfRangeException(nameof(amount));
+
+        if (string.IsNullOrWhiteSpace(currency))
+            throw new ArgumentException("Required.", nameof(currency));
+
+        Amount = amount;
+        Currency = currency.ToUpperInvariant(); // normalize
+    }
+
+    // Return components used for equality check (order matters)
+    protected override IEnumerable<object> GetEqualityComponents()
+    {
+        yield return Amount;
+        yield return Currency;
+    }
+}
+
+// Structural equality
+var money1 = new Money(10m, "usd");
+var money2 = new Money(10m, "USD");
+Console.WriteLine(money1 == money2); // true           
+```
+
+### Fail-fast validation & normalization
+
+Put invariants and normalization in the constructor so every instance is valid by design.  
+***Examples:*** *trimming strings, upper-casing codes, range checks, format checks.*
+
+```csharp
+public sealed class Email : ValueObject
+{
+    public string Value { get; }
+    public Email(string value)
+    {
+        if (!IsValidEmail(value))
+            throw new ArgumentException("Email is invalid.", nameof(value));
+        Value = value.Trim();
+    }
+
+    protected override IEnumerable<object> GetEqualityComponents()
+    {
+        yield return Value;
+    }
+}         
+```
+
+### Using value objects in collections (hashing)
+
+`GetHashCode()` is derived from the same components as equality (plus the unproxied type). The hash is cached for performance.
+
+```csharp
+var set = new HashSet<ValueObject> { new Money(10, "USD") };
+set.Contains(new Money(10, "USD")); // true   
+```
+### Overriding `ValueObject.UnproxiedType` (optional)
+
+ORMs create lazy-loading proxies for loaded objects. The value object base class default implementation `UnproxiedType => GetType()` will return the proxy type, not the domain type in this scenario. Since `ValuObject` compares objects by `UnproxiedType + equality components`, a proxy and a non-proxy instance of the same value object may compare as different if you keep the default. You can override `UnproxiedType` to overcome this issue.
+
+```csharp
+public class Money : ValueObject
+{
+    // as above…
+    protected override Type UnproxiedType => typeof(Money);
+}           
+```
+
