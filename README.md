@@ -72,8 +72,11 @@ An `Error` is a lightweight `ValueObject` that carries an error code and a human
 
 **Rule of thumb:** Use `Error` when you need a consistent error payload (store/log by `Code`, `Message`, and keep equality stable across layers).
 
-## Overview
-### Entity\<TId> with DB-generated Id
+## Usage
+This section contains small, self-contained examples that demonstrate how to use the types from **Sunlix.NET.DDD.BaseTypes**. The sample domain classes are deliberately simplified: they do not model a real domain, are not related to each other, and exist solely to illustrate the API surface. For clarity, the snippets omit nonessential infrastructure (e.g., error handling, logging, full EF Core setup) unless explicitly relevant. The examples below use **Entity Framework Core** as the ORM.
+
+### Entity with DB-generated Id
+Use this approach when the database assigns the primary key (IDENTITY/SEQUENCE). Create the entity without an Id (parameterless constructor), let EF Core persist it, and the Id will be populated on `SaveChanges()`. Until then the entity is transient (`Id == default`). Configure EF with `ValueGeneratedOnAdd()` to indicate the Id is database-generated.
 
 ```csharp
 public sealed class Book : Entity<int>
@@ -98,8 +101,8 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         bookBuilder.ToTable("Books").HasKey(b => b.Id);
         bookBuilder.Property(b => b.Id)
-            .ValueGeneratedOnAdd()
-            .UseIdentityColumn();
+            .ValueGeneratedOnAdd();
+            /*.UseIdentityColumn();             // use the IDENTITY feature to generate entity Id*/
     });
 }
 
@@ -109,3 +112,128 @@ context.Books.Add(book);
 await context.SaveChangesAsync();              // Id populated by EF Core             
 ```
 
+### Entity with app-assigned Id
+Use this approach when your application (or an upstream system) provides the identifier (e.g., Guid, ULID, Snowflake, or a typed ID value object). Construct the entity with the Id. Configure EF with `ValueGeneratedNever()`. The entity is non-transient immediately, so Id-based comparisons via `IdEqualityComparer` are safe before persistence.
+```csharp
+public sealed class User : Entity<Guid>
+{
+    // Parameterless constructor for ORM
+    private User() { }
+
+    public User(Guid id) : base(id) { }
+}
+
+// EF Core DbContext 
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.Entity<User>(userBuilder =>
+    {
+        bookBuilder.ToTable("Users").HasKey(b => b.Id);
+        bookBuilder.Property(b => b.Id)
+            .ValueGeneratedNever();
+    });
+}
+
+// Usage
+var user = new User(Guid.NewGuid());
+context.Users.Add(user);
+await context.SaveChangesAsync();              // Id is assigned by application           
+```
+
+### Entity with strongly typed Id
+Using strongly typed Ids prevents accidental mix-ups (e.g., passing a CustomerId where an OrderId is expected), makes APIs self-documenting, allows validation in one place, and still maps cleanly in EF Core via a value converter.
+
+```csharp
+public readonly record struct PersonId(Guid Value)
+{
+    public static PersonId Empty { get; } = default;
+    public static PersonId CreateNew() => new(Guid.NewGuid());
+}
+
+public sealed class Person
+{
+    // Strongly typed Id
+    public PersonId Id { get; private set; } = PersonId.Empty;
+
+    public string FirstName { get; private set; } = string.Empty;
+    public string LastName { get; private set; } = string.Empty;
+
+    // Parameterless constructor for ORM
+    private Person() { }
+
+    public static Person CreateNew(string firstName, string lastName) => new()
+    {
+        FirstName = firstName,
+        LastName = lastName,
+        Id = PersonId.CreateNew()
+    };
+}
+
+// EF Core DbContext 
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.Entity<Person>(personBuilder =>
+    {
+        personBuilder.ToTable("People").HasKey(p => p.Id);
+        personBuilder.Property(p => p.Id)
+            .HasConversion(id => id.Value, value => new PersonId(value));
+    });
+}
+
+// Usage
+var person = Person.CreateNew("John", "Smith");
+context.People.Add(person);
+await context.SaveChangesAsync();           
+```
+
+### Transience check
+
+`IsTransient()` tells you whether the entity has a default ID.
+
+```csharp
+if (order.IsTransient()) { /* not persisted yet */ }           
+```
+
+### Comparing entities
+
+Entity equality is context-dependent, so the base type does not override `Equals`. When you explicitly mean *same entity by Id*, use the provided comparer:
+
+```csharp
+var set = new HashSet<Entity<Guid>>(Entity<Guid>.IdEqualityComparer);
+
+var entityFromEfProxy = /* entity loaded via EF (proxy) */;
+var entityFromRepository = /* same entity loaded elsewhere */;
+
+set.Add(fromEfProxy);
+bool same = set.Contains(fromRepository); // true if UnproxiedType matches and Ids are equal           
+```
+You can use the comparer in dictionaries, sets, etc.
+```csharp
+var dict = new Dictionary<Entity<Guid>, string>(Entity<Guid>.IdEqualityComparer);           
+```
+
+### Overriding `UnproxiedType` (optional)
+
+Override `UnproxiedType` to compare a hierarchy as one conceptual type (e.g., treat all Payment subclasses as the same concept). Ensure Ids are unique across the hierarchy before unifying types like this.
+
+```csharp
+public abstract class Payment : Entity<Guid>
+{
+    // Treat all payments as the same conceptual type in Id-based comparisons
+    protected override Type UnproxiedType => typeof(Payment);
+}
+
+public sealed class CardPayment : Payment { }
+public sealed class BankTransfer : Payment { }           
+```
+
+#### Proxy note (EF Core & NHibernate).
+ORMs create lazy-loading proxies for entities. The entity base class default implementation `UnproxiedType => GetType()` will return the proxy type, not the domain type. Since `IdEqualityComparer` compares entities by `UnproxiedType + Id`, a proxy and a non-proxy instance of the same entity may compare as different if you keep the default.
+
+To avoid this, override `UnproxiedType` in the derived class to return the real domain type:
+```csharp
+public sealed class Order : Entity<int>
+{
+    protected override Type UnproxiedType => typeof(Order);
+}
+```
