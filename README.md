@@ -308,6 +308,7 @@ public sealed class Email : ValueObject
 var set = new HashSet<ValueObject> { new Money(10, "USD") };
 set.Contains(new Money(10, "USD")); // true   
 ```
+
 ### Overriding `ValueObject.UnproxiedType` (optional)
 
 ORMs create lazy-loading proxies for loaded objects. The value object base class default implementation `UnproxiedType => GetType()` will return the proxy type, not the domain type in this scenario. Since `ValuObject` compares objects by `UnproxiedType + equality components`, a proxy and a non-proxy instance of the same value object may compare as different if you keep the default. You can override `UnproxiedType` to overcome this issue.
@@ -318,5 +319,119 @@ public class Money : ValueObject
     // as above…
     protected override Type UnproxiedType => typeof(Money);
 }           
+```
+
+### Implement an enumeration
+
+`Enumeration<T>` is a `ValueObject` representing a "smart enum". Declare enumerations as static readonly properties. Enumerations are compared by value. Enumeration value should be non-negative integer and enumeration name should not be null or whitespace.
+
+```csharp
+public sealed class OrderStatus : Enumeration<OrderStatus>
+{
+    public static readonly OrderStatus Pending = new(0, "Pending");
+    public static readonly OrderStatus Paid = new(1, "Paid");
+
+    private OrderStatus(int value, string name) : base(value, name) { }
+}
+
+// Get all enumerations
+var enumerations = OrderStatus.GetAll();      
+
+// Throwing lookups
+var paid = OrderStatus.FromName("Failed");    // Invalid name → InvalidOperationException
+var shipped = OrderStatus.FromValue(4);       // Unknown value → InvalidOperationException
+
+// Safe lookups
+if (OrderStatus.TryGetFromName("paid", out var st1))  { /* false, st1 == null */ }
+if (OrderStatus.TryGetFromValue(3, out var st2))      { /* true, st2 == Cancelled */ }          
+```
+
+#### Notes
+
+* **Duplicates:** declaring two fields with the same `Value` or `Name` throws exception at first access.
+* **Name lookups:** exact match only; normalize at call site if needed.
+* **Proxies:** equality uses `UnproxiedType`, so if an ORM introduces lazy-loading proxies, override `UnproxiedType` (this was previously explained for value object).
+
+### Enumeration duplicate detection
+
+Enumeration values are declared as public static readonly fields on the derived type. The library discovers them on first use (lazy) via reflection, validates uniqueness, and then caches them:
+
+* On the first call to any API (`GetAll`, `FromValue`, `FromName`, `Exists`, `TryGet*`, etc.), the type `T` is scanned for its public static fields of type `T`.
+* The discovered instances are validated: **no duplicate `Value`** and **no duplicate `Name`** are allowed.
+* If duplicates are found, an `InvalidOperationException` is thrown at that first access (not at class load time), with a message pointing to the offending `Value`/`Name`.
+* After a successful first load, the results are cached (in-memory dictionaries for `Value`→`T` and `Name`→`T`) so all subsequent lookups are close to O(1).
+
+```csharp
+public sealed class OrderStatusWithDuplicateValue : Enumeration<OrderStatus>
+{
+    public static readonly OrderStatus Pending = new(1, "Pending");
+    public static readonly OrderStatus Paid = new(1, "Paid");
+
+    private OrderStatus(int value, string name) : base(value, name) { }
+}
+
+// Lookups throw InvalidOperationException
+var paid = OrderStatus.FromName("Paid");
+var shipped = OrderStatus.FromValue(1);
+
+// Safe lookups throw InvalidOperationException
+OrderStatus.TryGetFromName("paid", out _)
+OrderStatus.TryGetFromValue(3, out _)        
+```
+
+### Adding behaviour to an enumeration
+
+You can keep small, value-specific behavior within the enumeration, avoiding scattered switch statements and making the domain intent explicit.
+
+#### Example: tax calculation per category
+```csharp
+public sealed class TaxCategory : Enumeration<TaxCategory>
+{
+    public decimal Rate { get; } // e.g., 0.20m = 20%
+
+    private TaxCategory(int value, string name, decimal rate)
+        : base(value, name) => Rate = rate;
+
+    public decimal ApplyTax(decimal net) => Math.Round(net * (1 + Rate), 2);
+
+    public static readonly TaxCategory Standard = new(0, "Standard", 0.20m);
+    public static readonly TaxCategory Reduced = new(1, "Reduced", 0.10m);
+    public static readonly TaxCategory Zero = new(2, "Zero", 0.00m);
+}
+
+// Usage
+var gross = TaxCategory.Reduced.ApplyTax(100m); // 110.00        
+```
+
+### Implement an error
+
+An `Error` is a lightweight `ValueObject` for representing domain/application failures with an error code and a human-readable message. Use it to pass, compare, log, or serialize failures.
+
+#### Why not exceptions?
+Exceptions are for unexpected, exceptional conditions and control flow should not rely on them. Domain errors are expected (e.g., validation failures, rule violations) and should be returned/handled explicitly. Reserve exceptions for programmer mistakes, infrastructure faults, or truly exceptional states.
+
+```csharp
+public readonly record struct Result<T>(T? Value, Error? Error)
+{
+    public bool IsSuccess => Error is null;
+    public static Result<T> Ok(T value) => new(value, null);
+    public static Result<T> Fail(Error e) => new(default, e);
+}
+
+public static class Errors
+{
+    public static readonly Error InvalidEmail
+        => new("user.invalid_email", "Email format is invalid.");
+
+    public static Error NotFound(string entity, object id)
+        => new("common.not_found", $"{entity} with id '{id}' was not found.");
+}
+
+public Result<User> Register(string email)
+{
+    if (!IsValidEmail(email)) return Result<User>.Fail(Errors.InvalidEmail);
+    // ...
+    return Result<User>.Ok(new User(/*...*/));
+}        
 ```
 
