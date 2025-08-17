@@ -23,7 +23,6 @@
   - [Using value objects in collections (hashing)](#using-value-objects-in-collections-hashing)
   - [Overriding `ValueObject.UnproxiedType` (optional)](#overriding-valueobjectunproxiedtype-optional)
   - [Implement an enumeration](#implement-an-enumeration)
-  - [Notes](#notes)
   - [Enumeration duplicate detection](#enumeration-duplicate-detection)
   - [Adding behaviour to an enumeration](#adding-behaviour-to-an-enumeration)
   - [Implement an error](#implement-an-error)
@@ -358,7 +357,7 @@ if (OrderStatus.TryGetFromName("paid", out var st1))  { /* false, st1 == null */
 if (OrderStatus.TryGetFromValue(3, out var st2))      { /* true, st2 == Cancelled */ }          
 ```
 
-#### Notes
+**Notes:**
 
 * **Duplicates:** declaring two fields with the same `Value` or `Name` throws exception at first access.
 * **Name lookups:** exact match only; normalize at call site if needed.
