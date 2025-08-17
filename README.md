@@ -4,20 +4,32 @@
 
 ## Table of contents
 
-* [Overview](#overview)
-  * [Entity\<TId>](#entitytid)
-  * [ValueObject](#valueobject)
-  * [Enumeration\<T>](#enumerationt)
-* [Usage examples](#usage-examples)
-  * [Implementing a value object (Money)](#implementing-a-value-object-money)
-  * [Modeling entities (DB-generated vs app-generated IDs)](#modeling-entities-db-generated-vs-app-generated-ids)
-  * [Smart enums (OrderStatus)](#smart-enums-orderstatus)
-* [Equality & hashing rules](#equality--hashing-rules)
-* [Validation & exceptions](#validation--exceptions)
-* [EF Core notes](#ef-core-notes)
-* [Customization points](#customization-points)
-* [FAQ](#faq)
-* [License](#license)
+## Table of contents
+
+- [Overview](#overview)
+  - [Entity<TId>](#entitytid)
+  - [ValueObject](#valueobject)
+  - [Enumeration<T>](#enumerationt)
+  - [Error](#error)
+- [Usage](#usage)
+  - [Implement an entity with DB-generated Id](#implement-an-entity-with-db-generated-id)
+  - [Implement an entity with app-assigned Id](#implement-an-entity-with-app-assigned-id)
+  - [Implement an entity with strongly typed Id](#implement-an-entity-with-strongly-typed-id)
+  - [Transience check](#transience-check)
+  - [Comparing entities](#comparing-entities)
+  - [Overriding `Entity<TId>.UnproxiedType` (optional)](#overriding-entitytidunproxiedtype-optional)
+  - [Implement a value object](#implement-a-value-object)
+  - [Fail-fast validation & normalization](#fail-fast-validation--normalization)
+  - [Using value objects in collections (hashing)](#using-value-objects-in-collections-hashing)
+  - [Overriding `ValueObject.UnproxiedType` (optional)](#overriding-valueobjectunproxiedtype-optional)
+  - [Implement an enumeration](#implement-an-enumeration)
+  - [Notes](#notes)
+  - [Enumeration duplicate detection](#enumeration-duplicate-detection)
+  - [Adding behaviour to an enumeration](#adding-behaviour-to-an-enumeration)
+  - [Implement an error](#implement-an-error)
+- [Installation](#installation)
+- [License](#license)
+- [Contributing](#contributing)
 
 ## Overview
 ### Entity\<TId>
@@ -434,4 +446,14 @@ public Result<User> Register(string email)
     return Result<User>.Ok(new User(/*...*/));
 }        
 ```
+## Installation
+You can install the package via NuGet:
+```sh
+dotnet add package Sunlix.NET.DDD.BaseTypes
+```
 
+## License
+Sunlix.NET.DDD.BaseTypes is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
+
+## Contributing
+Contributions are welcome! Feel free to open an issue or submit a pull request.
