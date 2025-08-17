@@ -11,28 +11,6 @@
             sut.IsTransient().Should().BeFalse();
         }
 
-        [Fact]
-        public void Constructor_should_throw_exception_when_id_is_null()
-        {
-            Action act = () => new TestEntity<string>(null!);
-
-            act.Should()
-               .Throw<ArgumentException>()
-               .WithMessage("Entity Id should not be null or default value.*")
-               .And.ParamName.Should().Be("id");
-        }
-
-        [Fact]
-        public void Constructor_should_throw_exception_when_id_is_default()
-        {
-            Action act = () => new TestEntity<int>(0);
-
-            act.Should()
-               .Throw<ArgumentException>()
-               .WithMessage("Entity Id should not be null or default value.*")
-               .And.ParamName.Should().Be("id");
-        }
-
         [Theory]
         [MemberData(nameof(GetTransientEntitiesWithIds))]
         public void Transient_entity_should_be_initialized_correctly<TId>(TestEntity<TId> sut, TId id)

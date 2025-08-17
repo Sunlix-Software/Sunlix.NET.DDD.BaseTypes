@@ -9,7 +9,7 @@
       </summary>
       <remarks>
         <para>
-          For more details, see the <see href="https://github.com/SunlixSoftware/docs/blob/main/ValueObject.md">official documentation</see>.
+          For more details, see the <see href="https://github.com/Sunlix-Software/Sunlix.NET.DDD.BaseTypes/blob/main/README.md">official documentation</see>.
         </para>
       </remarks>
     </member>
@@ -51,7 +51,7 @@
           </item>
         </list>
         <para>
-          For details, see the <see href="https://github.com/SunlixSoftware/docs/blob/main/ValueObject.md">official documentation</see>.
+          For more details, see the <see href="https://github.com/Sunlix-Software/Sunlix.NET.DDD.BaseTypes/blob/main/README.md">official documentation</see>.
         </para>
       </remarks>
     </member>
@@ -93,7 +93,7 @@
           </item>
         </list>
         <para>
-          For more details, see the <see href="https://github.com/SunlixSoftware/docs/blob/main/ValueObject.md">official documentation</see>.
+          For more details, see the <see href="https://github.com/Sunlix-Software/Sunlix.NET.DDD.BaseTypes/blob/main/README.md">official documentation</see>.
         </para>
       </remarks>
     </member>
@@ -110,7 +110,7 @@
         This method uses the same components as <see cref="Equals(ValueObject)"/> to ensure that two equal value objects<br/>
         always produce the same hash code.
         <para>
-          For more details, see the <see href="https://github.com/SunlixSoftware/docs/blob/main/ValueObject.md">official documentation</see>.
+          For more details, see the <see href="https://github.com/Sunlix-Software/Sunlix.NET.DDD.BaseTypes/blob/main/README.md">official documentation</see>.
         </para>
       </remarks>
     </member>
@@ -132,7 +132,7 @@
           This property is used in equality checks to ensure that value objects are of the same conceptual type.
         </para>
         <para>
-          For more details, see the <see href="https://github.com/SunlixSoftware/docs/blob/main/ValueObject.md">official documentation</see>.
+          For more details, see the <see href="https://github.com/Sunlix-Software/Sunlix.NET.DDD.BaseTypes/blob/main/README.md">official documentation</see>.
         </para>
       </remarks>
     </member>
@@ -153,6 +153,9 @@
         <para>
           The same components returned here are also used by <see cref="GetHashCode"/> to ensure that equal value objects
           have the same hash code.
+        </para>
+        <para>
+          For more details, see the <see href="https://github.com/Sunlix-Software/Sunlix.NET.DDD.BaseTypes/blob/main/README.md">official documentation</see>.
         </para>
       </remarks>
     </member>

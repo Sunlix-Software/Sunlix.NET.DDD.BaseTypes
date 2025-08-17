@@ -14,7 +14,7 @@
           they share the same <see cref="ValueObject.UnproxiedType"/> and have the same <see cref="Value"/>.
         </para>
         <para>
-          For more details, see the <see href="https://github.com/SunlixSoftware/docs/blob/main/ValueObject.md">official documentation</see>.
+          For more details, see the <see href="https://github.com/Sunlix-Software/Sunlix.NET.DDD.BaseTypes/blob/main/README.md">official documentation</see>.
         </para>
       </remarks>
     </member>
@@ -28,7 +28,7 @@
         A unique integer value representing the enumeration instance.
       </value>
       <para>
-        For more details, see the <see href="https://github.com/SunlixSoftware/docs/blob/main/ValueObject.md">official documentation</see>.
+        For more details, see the <see href="https://github.com/Sunlix-Software/Sunlix.NET.DDD.BaseTypes/blob/main/README.md">official documentation</see>.
       </para>
     </member>
 
@@ -41,7 +41,7 @@
         A unique string representing the enumeration instance.
       </value>
       <para>
-        For more details, see the <see href="https://github.com/SunlixSoftware/docs/blob/main/ValueObject.md">official documentation</see>.
+        For more details, see the <see href="https://github.com/Sunlix-Software/Sunlix.NET.DDD.BaseTypes/blob/main/README.md">official documentation</see>.
       </para>
     </member>
     
@@ -64,7 +64,7 @@
           Throws <see cref="System.ArgumentException"/> if <paramref name="name"/> is null or whitespace.
         </para>
         <para>
-          For more details, see the <see href="https://github.com/SunlixSoftware/docs/blob/main/ValueObject.md">official documentation</see>.
+          For more details, see the <see href="https://github.com/Sunlix-Software/Sunlix.NET.DDD.BaseTypes/blob/main/README.md">official documentation</see>.
         </para>
       </remarks>
       <exception cref="System.ArgumentException"></exception>
@@ -86,7 +86,7 @@
           <paramref name="value"/> exists in the derived type.
         </para>
         <para>
-          For more details, see the <see href="https://github.com/SunlixSoftware/docs/blob/main/ValueObject.md">official documentation</see>.
+          For more details, see the <see href="https://github.com/Sunlix-Software/Sunlix.NET.DDD.BaseTypes/blob/main/README.md">official documentation</see>.
         </para>
       </remarks>
       <exception cref="System.InvalidOperationException"></exception>
@@ -104,7 +104,7 @@
       </returns>
       <remarks>
         <para>
-          For more details, see the <see href="https://github.com/SunlixSoftware/docs/blob/main/ValueObject.md">official documentation</see>.
+          For more details, see the <see href="https://github.com/Sunlix-Software/Sunlix.NET.DDD.BaseTypes/blob/main/README.md">official documentation</see>.
         </para>
       </remarks>
     </member>
@@ -124,7 +124,7 @@
           <paramref name="name"/> exists in the derived type.
         </para>
         <para>
-          For more details, see the <see href="https://github.com/SunlixSoftware/docs/blob/main/ValueObject.md">official documentation</see>.
+          For more details, see the <see href="https://github.com/Sunlix-Software/Sunlix.NET.DDD.BaseTypes/blob/main/README.md">official documentation</see>.
         </para>
       </remarks>
       <exception cref="System.InvalidOperationException"></exception>
@@ -142,7 +142,7 @@
       </returns>
       <remarks>
         <para>
-          For more details, see the <see href="https://github.com/SunlixSoftware/docs/blob/main/ValueObject.md">official documentation</see>.
+          For more details, see the <see href="https://github.com/Sunlix-Software/Sunlix.NET.DDD.BaseTypes/blob/main/README.md">official documentation</see>.
         </para>
       </remarks>
     </member>
@@ -158,7 +158,7 @@
       </returns>
       <remarks>
         <para>
-          For more details, see the <see href="https://github.com/SunlixSoftware/docs/blob/main/ValueObject.md">official documentation</see>.
+          For more details, see the <see href="https://github.com/Sunlix-Software/Sunlix.NET.DDD.BaseTypes/blob/main/README.md">official documentation</see>.
         </para>
       </remarks>
     </member>
@@ -174,7 +174,7 @@
       </returns>
       <remarks>
         <para>
-          For more details, see the <see href="https://github.com/SunlixSoftware/docs/blob/main/ValueObject.md">official documentation</see>.
+          For more details, see the <see href="https://github.com/Sunlix-Software/Sunlix.NET.DDD.BaseTypes/blob/main/README.md">official documentation</see>.
         </para>
       </remarks>
     </member>
@@ -189,7 +189,7 @@
       </returns>
       <remarks>
         <para>
-          For more details, see the <see href="https://github.com/SunlixSoftware/docs/blob/main/ValueObject.md">official documentation</see>.
+          For more details, see the <see href="https://github.com/Sunlix-Software/Sunlix.NET.DDD.BaseTypes/blob/main/README.md">official documentation</see>.
         </para>
       </remarks>
     </member>
@@ -205,7 +205,7 @@
       </returns>
       <remarks>
         <para>
-          For more details, see the <see href="https://github.com/SunlixSoftware/docs/blob/main/ValueObject.md">official documentation</see>.
+          For more details, see the <see href="https://github.com/Sunlix-Software/Sunlix.NET.DDD.BaseTypes/blob/main/README.md">official documentation</see>.
         </para>
       </remarks>
     </member>
@@ -224,7 +224,7 @@
           Throws <see cref="System.ArgumentException"/> if the object is not of type <see cref="Enumeration{T}"/>.
         </para>
         <para>
-          For more details, see the <see href="https://github.com/SunlixSoftware/docs/blob/main/ValueObject.md">official documentation</see>.
+          For more details, see the <see href="https://github.com/Sunlix-Software/Sunlix.NET.DDD.BaseTypes/blob/main/README.md">official documentation</see>.
         </para>
       </remarks>
       <exception cref="System.ArgumentException"></exception>
@@ -240,7 +240,7 @@
       </returns>
       <remarks>
         <para>
-          For more details, see the <see href="https://github.com/SunlixSoftware/docs/blob/main/ValueObject.md">official documentation</see>.
+          For more details, see the <see href="https://github.com/Sunlix-Software/Sunlix.NET.DDD.BaseTypes/blob/main/README.md">official documentation</see>.
         </para>
       </remarks>
     </member>
@@ -259,7 +259,7 @@
           The same components are also used by <see cref="ValueObject.GetHashCode"/> so that equal instances produce the same hash code.
         </para>
         <para>
-          For more details, see the <see href="https://github.com/SunlixSoftware/docs/blob/main/ValueObject.md">official documentation</see>.
+          For more details, see the <see href="https://github.com/Sunlix-Software/Sunlix.NET.DDD.BaseTypes/blob/main/README.md">official documentation</see>.
         </para>
       </remarks>
     </member>

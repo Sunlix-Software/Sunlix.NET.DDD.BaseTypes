@@ -13,7 +13,7 @@
           Entity has a unique identity defined by an identifier of type <typeparamref name="TId"/>.
         </para>
         <para>
-          For more details, see the <see href="#">official documentation</see>.
+          For more details, see the <see href="https://github.com/Sunlix-Software/Sunlix.NET.DDD.BaseTypes/blob/main/README.md">official documentation</see>.
         </para>
       </remarks>
     </member>
@@ -26,6 +26,9 @@
       <remarks>
         <para>
           The parameterless constructor does not initialize the entity's identifier. It is intended for use by serializers or ORM tools that require a default constructor.
+        </para>
+        <para>
+          For more details, see the <see href="https://github.com/Sunlix-Software/Sunlix.NET.DDD.BaseTypes/blob/main/README.md">official documentation</see>.
         </para>
       </remarks>
     </member>
@@ -41,13 +44,9 @@
           This constructor assigns the provided identifier to the entity.
         </para>
         <para>
-          Throws <see cref="System.ArgumentException"/> if <paramref name="id"/> is null or default.
-        </para>
-        <para>
-          For more details, see the <see href="https://github.com/SunlixSoftware/docs/blob/main/ValueObject.md">official documentation</see>.
+          For more details, see the <see href="https://github.com/Sunlix-Software/Sunlix.NET.DDD.BaseTypes/blob/main/README.md">official documentation</see>.
         </para>
       </remarks>
-      <exception cref="System.ArgumentException"></exception>
     </member>
 
     <!-- ======= Documentation for Id property ======= -->
@@ -60,7 +59,7 @@
       </value>
       <remarks>
         <para>
-          For more details, see the <see href="#">official documentation</see>.
+          For more details, see the <see href="https://github.com/Sunlix-Software/Sunlix.NET.DDD.BaseTypes/blob/main/README.md">official documentation</see>.
         </para>
       </remarks>
     </member>
@@ -82,7 +81,7 @@
           This property is used in equality checks to ensure that entities are of the same conceptual type.
         </para>
         <para>
-          For more details, see the <see href="https://github.com/SunlixSoftware/docs/blob/main/ValueObject.md">official documentation</see>.
+          For more details, see the <see href="https://github.com/Sunlix-Software/Sunlix.NET.DDD.BaseTypes/blob/main/README.md">official documentation</see>.
         </para>
       </remarks>
     </member>
@@ -98,7 +97,7 @@
       </returns>
       <remarks>
         <para>
-          For more details, see the <see href="https://github.com/SunlixSoftware/docs/blob/main/ValueObject.md">official documentation</see>.
+          For more details, see the <see href="https://github.com/Sunlix-Software/Sunlix.NET.DDD.BaseTypes/blob/main/README.md">official documentation</see>.
         </para>
       </remarks>
     </member>
@@ -113,7 +112,7 @@
       </returns>
       <remarks>
         <para>
-          For more details, see the <see href="#">official documentation</see>.
+          For more details, see the <see href="https://github.com/Sunlix-Software/Sunlix.NET.DDD.BaseTypes/blob/main/README.md">official documentation</see>.
         </para>
       </remarks>
     </member>

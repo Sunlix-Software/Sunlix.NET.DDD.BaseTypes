@@ -93,6 +93,24 @@
             result.Should().BeFalse();
         }
 
+        [Fact]
+        public void Exists_should_throw_exception_when_duplicate_value_exists()
+        {
+            Action act = () => TestEnumerationWithDuplicateValue.Exists(1);
+
+            act.Should().Throw<InvalidOperationException>()
+                .WithMessage("Duplicate enumeration value detected: '1'. Value must be unique.");
+        }
+
+        [Fact]
+        public void Exists_should_throw_exception_when_duplicate_name_exists()
+        {
+            Action act = () => TestEnumerationWithDuplicateName.Exists(1);
+
+            act.Should().Throw<InvalidOperationException>()
+                .WithMessage("Duplicate enumeration name detected: 'Status1'. Name must be unique.");
+        }
+
         [Theory]
         [MemberData(nameof(GetValuesWithResults))]
         public void FromValue_should_return_enumeration_by_value(int value, TestEnumeration expextedResult)
@@ -117,6 +135,24 @@
 
             act.Should().Throw<InvalidOperationException>()
                 .WithMessage("Enumeration value '-1' is not valid for Sunlix.NET.DDD.BaseTypes.Tests.TestEnumeration.");
+        }
+
+        [Fact]
+        public void FromValue_should_throw_exception_when_duplicate_value_exists()
+        {
+            Action act = () => TestEnumerationWithDuplicateValue.FromValue(1);
+
+            act.Should().Throw<InvalidOperationException>()
+                .WithMessage("Duplicate enumeration value detected: '1'. Value must be unique.");
+        }
+
+        [Fact]
+        public void FromValue_should_throw_exception_when_duplicate_name_exists()
+        {
+            Action act = () => TestEnumerationWithDuplicateName.FromValue(1);
+
+            act.Should().Throw<InvalidOperationException>()
+                .WithMessage("Duplicate enumeration name detected: 'Status1'. Name must be unique.");
         }
 
         [Theory]
@@ -147,6 +183,24 @@
             enumeration.Should().BeNull();
         }
 
+        [Fact]
+        public void TryGetFromValue_should_throw_exception_when_duplicate_value_exists()
+        {
+            Action act = () => TestEnumerationWithDuplicateValue.TryGetFromValue(1, out _);
+
+            act.Should().Throw<InvalidOperationException>()
+                .WithMessage("Duplicate enumeration value detected: '1'. Value must be unique.");
+        }
+
+        [Fact]
+        public void TryGetFromValue_should_throw_exception_when_duplicate_name_exists()
+        {
+            Action act = () => TestEnumerationWithDuplicateName.TryGetFromValue(1, out _);
+
+            act.Should().Throw<InvalidOperationException>()
+                .WithMessage("Duplicate enumeration name detected: 'Status1'. Name must be unique.");
+        }
+
         [Theory]
         [MemberData(nameof(GetNamesWithResults))]
         public void FromName_should_return_enumeration_by_name(string name, TestEnumeration expextedResult)
@@ -172,6 +226,24 @@
 
             act.Should().Throw<InvalidOperationException>()
                 .WithMessage($"Enumeration name '{name}' is not valid for Sunlix.NET.DDD.BaseTypes.Tests.TestEnumeration.");
+        }
+
+        [Fact]
+        public void FromName_should_throw_exception_when_duplicate_value_exists()
+        {
+            Action act = () => TestEnumerationWithDuplicateValue.FromName("Status1");
+
+            act.Should().Throw<InvalidOperationException>()
+                .WithMessage("Duplicate enumeration value detected: '1'. Value must be unique.");
+        }
+
+        [Fact]
+        public void FromName_should_throw_exception_when_duplicate_name_exists()
+        {
+            Action act = () => TestEnumerationWithDuplicateName.FromName("Status1");
+
+            act.Should().Throw<InvalidOperationException>()
+                .WithMessage("Duplicate enumeration name detected: 'Status1'. Name must be unique.");
         }
 
         [Theory]
@@ -201,6 +273,24 @@
 
             result.Should().BeFalse();
             enumeration.Should().BeNull();
+        }
+
+        [Fact]
+        public void TryGetFromName_should_throw_exception_when_duplicate_value_exists()
+        {
+            Action act = () => TestEnumerationWithDuplicateValue.TryGetFromName("Status1", out _);
+
+            act.Should().Throw<InvalidOperationException>()
+                .WithMessage("Duplicate enumeration value detected: '1'. Value must be unique.");
+        }
+
+        [Fact]
+        public void TryGetFromName_should_throw_exception_when_duplicate_name_exists()
+        {
+            Action act = () => TestEnumerationWithDuplicateName.TryGetFromName("Status1", out _);
+
+            act.Should().Throw<InvalidOperationException>()
+                .WithMessage("Duplicate enumeration name detected: 'Status1'. Name must be unique.");
         }
 
         [Fact]

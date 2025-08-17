@@ -7,13 +7,7 @@
         protected Entity() { }
 
         /// <include file="XmlDocs/Entity.xml" path="doc/members/member[@name='M:Entity.#ctor(`0)']/*" />
-        protected Entity(TId id)
-        {
-            if (EqualityComparer<TId>.Default.Equals(id, default!))
-                throw new ArgumentException("Entity Id should not be null or default value.", nameof(id));
-
-            Id = id;
-        }
+        protected Entity(TId id) => Id = id;
 
         /// <include file="XmlDocs/Entity.xml" path="doc/members/member[@name='P:Entity.Id']/*" />
         public virtual TId? Id { get; protected set; }

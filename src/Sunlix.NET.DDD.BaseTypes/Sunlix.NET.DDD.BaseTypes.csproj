@@ -6,4 +6,25 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <PackageId>Sunlix.NET.DDD.BaseTypes</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>Igor Bzovsky</Authors>
+    <Company>Sunlix</Company>
+    <Description>Sunlix.NET.DDD.BaseTypes is a lightweight library providing a set of base types for domain modeling in C#. It includes Entity, ValueObject, Enumeration, and Error, which are particularly useful in domain-driven design (DDD).</Description>
+    <PackageTags>Sunlix, DDD, Entity, ValueObject, Enumeration</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/Sunlix-Software/Sunlix.NET.DDD.BaseTypes</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageProjectUrl>https://github.com/Sunlix-Software/Sunlix.NET.Primitives</PackageProjectUrl>
+    <PackageIcon>sunlix.png</PackageIcon>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="assets\sunlix.png" Pack="true" PackagePath="" />
+    <None Include="README.md" Pack="true" PackagePath="" />
+  </ItemGroup>
+
 </Project>

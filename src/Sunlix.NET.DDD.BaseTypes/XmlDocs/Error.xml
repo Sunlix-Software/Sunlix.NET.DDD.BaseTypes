@@ -11,6 +11,9 @@
         <para>
           The <see cref="Error"/> class is used to represent errors in a structured way.
         </para>
+        <para>
+          For more details, see the <see href="https://github.com/Sunlix-Software/Sunlix.NET.DDD.BaseTypes/blob/main/README.md">official documentation</see>.
+        </para>
       </remarks>
     </member>
 
@@ -19,6 +22,11 @@
       <summary>
         Gets the error code that identifies the type of error.
       </summary>
+      <remarks>
+        <para>
+          For more details, see the <see href="https://github.com/Sunlix-Software/Sunlix.NET.DDD.BaseTypes/blob/main/README.md">official documentation</see>.
+        </para>
+      </remarks>
     </member>
 
     <!-- ======= Documentation for Message property ======= -->
@@ -26,6 +34,11 @@
       <summary>
         Gets the descriptive message associated with the error.
       </summary>
+      <remarks>
+        <para>
+          For more details, see the <see href="https://github.com/Sunlix-Software/Sunlix.NET.DDD.BaseTypes/blob/main/README.md">official documentation</see>.
+        </para>
+      </remarks>
     </member>
 
     <!-- ======= Documentation for constructor Error(string, string) ======= -->
@@ -35,6 +48,11 @@
       </summary>
       <param name="code">The unique identifier for the error.</param>
       <param name="message">A descriptive message providing details about the error.</param>
+      <remarks>
+        <para>
+          For more details, see the <see href="https://github.com/Sunlix-Software/Sunlix.NET.DDD.BaseTypes/blob/main/README.md">official documentation</see>.
+        </para>
+      </remarks>
     </member>
 
     <!-- ======= Documentation for GetEqualityComponents() method ======= -->
@@ -50,6 +68,9 @@
           Equality for <see cref="Error"/> is based on the <see cref="ValueObject.UnproxiedType"/> and <see cref="Code"/>.
           The same components are also used by <see cref="ValueObject.GetHashCode"/> so that equal instances produce the same hash code.
         </para>
+        <para>
+          For more details, see the <see href="https://github.com/Sunlix-Software/Sunlix.NET.DDD.BaseTypes/blob/main/README.md">official documentation</see>.
+        </para>
       </remarks>
     </member>
 
@@ -61,6 +82,11 @@
       <returns>
         A string that represents the current <see cref="Error"/> instance.
       </returns>
+      <remarks>
+        <para>
+          For more details, see the <see href="https://github.com/Sunlix-Software/Sunlix.NET.DDD.BaseTypes/blob/main/README.md">official documentation</see>.
+        </para>
+      </remarks>
     </member>
 
   </members>
