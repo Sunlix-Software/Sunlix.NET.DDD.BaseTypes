@@ -36,22 +36,72 @@
 - [License](#license)
 - [Contributing](#contributing)
 
-## Overview
+## Usage
+This section contains small, self-contained examples that demonstrate how to use the types from **Sunlix.NET.DDD.BaseTypes**. The sample domain classes are deliberately simplified: they do not model a real domain, are not related to each other, and exist solely to illustrate the API surface. For clarity, the snippets omit nonessential infrastructure (e.g., error handling, logging, ORM setup, etc.).
+
 ### Entity\<TId>
-An `Entity<T>` is a domain object defined primarily by its identity, not by its attributes. It represents a distinct, trackable thing in the domain— e.g., an Order, Customer, or Account — whose history and continuity over time matter.
+Entities represent domain concepts that must be individually tracked over time. Each entity has a **unique identity** that distinguishes it from all others and enables references across the system (e.g. `Order`, `Customer` or `Account`). Unlike value objects, entities are **mutable**: their attributes can change, but their identity remains the same. Entities typically **have a lifespan** (*creation → updates → archival/deletion*) and often participate in aggregates and transactions, constrained by invariants. 
 
-**General concepts:**
+Whether two entity instances **are “the same” depends on context**. Two objects can refer to the same business entity yet carry different snapshots of state (staleness, out-of-date caches). We don’t override `Equals` on `Entity<TId>`. Instead we provide a domain service `Entity<TId>.IdEqualityComparer` which compares entities by `UnproxiedType` and `Id`.
 
-* **Domain role:** Entities model real domain concepts that must be individually tracked, constrained by invariants, and often participate in aggregates and transactions.
-* **Identity:** An identifier that uniquely distinguishes one instance from all others and enables references between objects.
-* **Lifespan:** The entity persists across multiple operations and can change over time (creation → updates → archival/deletion).
-* **Mutability:** Unlike value objects, entities are mutable — their attributes can change while the identity remains the same.
-* **Equality:** Whether two entity instances are “the same” depends on context. Two objects can refer to the same business entity yet carry different snapshots of state (staleness, out-of-date caches). We don’t override `Equals` on `Entity<TId>`. Instead we provide a domain service `Entity<TId>.IdEqualityComparer` which compares entities by `UnproxiedType` and `Id`. Use it when you explicitly mean “same conceptual entity + same identifier” (e.g., for reconciliation of entities).
+#### Example: Entity with app-assigned id
 
-**Rule of thumb:** use an `Entity<T>` when the business cares about which specific thing it is over time (its continuity and audit trail), not just what values it holds at a moment.
+```csharp
+public sealed class Book : Entity<Guid>
+{
+    public string Title { get; private set; } = string.Empty;
+
+    // Parameterless constructor for ORM
+    private Book() { }
+
+    public Book(Guid id, string title) : base(id) => Title = title;
+}
+
+// Usage
+var user = new User(Guid.NewGuid());
+context.Users.Add(user);
+await context.SaveChangesAsync();              // Id is assigned by application   
+```
+
+#### Example: Entity with DB-generated id
+
+```csharp
+public sealed class Book : Entity<int>
+{
+    public string Title { get; private set; } = string.Empty;
+
+    // Parameterless constructor for ORM
+    private Book() { }
+
+    public Book(string title) => Title = title;
+}
+
+// EF Core DbContext 
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.Entity<Book>(bookBuilder =>
+    {
+        bookBuilder.ToTable("Books").HasKey(b => b.Id);
+        bookBuilder.Property(b => b.Id)
+            .ValueGeneratedOnAdd();
+            /*.UseIdentityColumn();             // use the IDENTITY feature to generate entity Id*/
+    });
+}
+
+// Usage
+var book = new Book("Domain-Driven Design");   // Id == default (transient entity)
+context.Books.Add(book);
+await context.SaveChangesAsync();              // Id populated by EF Core
+```
+
+
 
 ### ValueObject
-A `ValueObject` models a descriptive aspect of the domain rather than a distinct, trackable thing. Typical examples include money amounts, dates and ranges, measurements, addresses, and email addresses.
+A value object models a descriptive aspect of the domain rather than a distinct, trackable thing. Typical examples include money amounts, dates and ranges, measurements, addresses, and email addresses. Unlike entities, value objects have **no identity**: two instances with the same values are fully interchangeable. They are **immutable** — any modification produces a new instance, which simplifies reasoning, avoids side effects, and ensures safe sharing. Value objects are **ephemeral**: they are created where needed, passed around, and discarded. The domain doesn’t care about their history, only the value they hold at the moment.
+
+**Equality is structural**: two value objects are equal if they share the same `UnproxiedType` and all components returned by `GetEqualityComponents() `are equal in length, order, and value. Hash codes are derived from these components, enabling correct use in sets and dictionaries.
+
+Value objects should also be validated and normalized at creation (fail fast), often enforcing invariants like ranges, formats, or canonical representations (e.g., uppercased currency codes). They can also be composed into larger value objects (e.g., an `Address` built from `Street`, `City`, and `PostalCode`).
 
 **General concepts:**
 
