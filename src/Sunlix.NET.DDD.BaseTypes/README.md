@@ -4,7 +4,7 @@
 [![NuGet Downloads](https://img.shields.io/nuget/dt/Sunlix.NET.DDD.BaseTypes.svg)](https://www.nuget.org/packages/Sunlix.NET.DDD.BaseTypes/)
 [![GitHub license](https://img.shields.io/github/license/Sunlix-Software/Sunlix.NET.DDD.BaseTypes.svg)](https://github.com/Sunlix-Software/Sunlix.NET.DDD.BaseTypes/blob/main/LICENSE)
 
-**Sunlix.NET.DDD.BaseTypes** is a lightweight and extensible library designed for building robust domain models in C#. It provides a clean foundation for implementing **Domain-Driven Design (DDD)** patterns by introducing essential base types: `Entity`, `ValueObject`, `Enumeration`, and `Error`. These primitives help developers write more expressive, consistent, and maintainable domain logic while reducing boilerplate code. The library is framework-agnostic, making it suitable for use in microservices, monoliths, and modular applications.
+**Sunlix.NET.DDD.BaseTypes** is a lightweight and extensible library designed for building robust domain models in C#. It provides a clean foundation for implementing **Domain-Driven Design (DDD)** patterns by introducing essential base types: `Entity`, `ValueObject`, `Enumeration`, `Error` and `Unit`. These primitives help developers write more expressive, consistent, and maintainable domain logic while reducing boilerplate code. The library is framework-agnostic, making it suitable for use in microservices, monoliths, and modular applications.
 
 
 ## Table of contents
