@@ -1,0 +1,169 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<doc>
+  <members>
+
+    <!-- ======= Documentation for Unit struct ======= -->
+    <member name="T:Unit">
+      <summary>
+        Represents a <i>unit</i> value — a type that carries no information and has a single inhabitant.
+      </summary>
+      <remarks>
+        <para>
+          Use <see cref="Unit"/> when you need a return type to satisfy a generic constraint,
+          but the operation conceptually returns “nothing” (e.g., <c>Task&lt;Unit&gt;</c>).
+        </para>
+        <para>
+          For more details, see the <see href="https://github.com/Sunlix-Software/Sunlix.NET.DDD.BaseTypes/blob/main/README.md">official documentation</see>.
+        </para>
+      </remarks>
+    </member>
+
+    <!-- ======= Documentation for Unit.value field ======= -->
+    <member name="F:value">
+      <summary>
+        The canonical unit value. All <see cref="Unit"/> instances are equal to this value.
+      </summary>
+      <remarks>
+        <para>
+          Prefer returning <see cref="Unit.value"/> instead of constructing new instances.
+        </para>
+        <para>
+          For more details, see the <see href="https://github.com/Sunlix-Software/Sunlix.NET.DDD.BaseTypes/blob/main/README.md">official documentation</see>.
+        </para>
+      </remarks>
+    </member>
+
+    <!-- ======= Documentation for Equals(Unit) method ======= -->
+    <member name="M:Equals(Unit)">
+      <summary>
+        Determines whether the specified <see cref="Unit"/> is equal to the current instance.
+      </summary>
+      <param name="other">
+        Another <see cref="Unit"/> value to compare with the current instance.
+      </param>
+      <returns>
+        Always <c>true</c>, because all <see cref="Unit"/> values are equal.
+      </returns>
+      <remarks>
+        <para>
+          For more details, see the <see href="https://github.com/Sunlix-Software/Sunlix.NET.DDD.BaseTypes/blob/main/README.md">official documentation</see>.
+        </para>
+      </remarks>
+    </member>
+
+    <!-- ======= Documentation for Equals(object) method ======= -->
+    <member name="M:Equals(System.Object)">
+      <summary>
+        Determines whether the specified object is a <see cref="Unit"/> and thus equal to the current instance.
+      </summary>
+      <param name="obj">The object to compare with the current instance.</param>
+      <returns>
+        <c>true</c> if <paramref name="obj"/> is a <see cref="Unit"/>; otherwise, <c>false</c>.
+      </returns>
+      <remarks>
+        <para>
+          For more details, see the <see href="https://github.com/Sunlix-Software/Sunlix.NET.DDD.BaseTypes/blob/main/README.md">official documentation</see>.
+        </para>
+      </remarks>
+    </member>
+
+    <!-- ======= Documentation for GetHashCode method ======= -->
+    <member name="M:GetHashCode">
+      <summary>
+        Returns a hash code for the current <see cref="Unit"/>.
+      </summary>
+      <returns>
+        Always <c>0</c>, because all <see cref="Unit"/> values are equal.
+      </returns>
+      <remarks>
+        <para>
+          For more details, see the <see href="https://github.com/Sunlix-Software/Sunlix.NET.DDD.BaseTypes/blob/main/README.md">official documentation</see>.
+        </para>
+      </remarks>
+    </member>
+
+    <!-- ======= Documentation for ToString method ======= -->
+    <member name="M:ToString">
+      <summary>
+        Returns a string that represents the current <see cref="Unit"/>.
+      </summary>
+      <returns>
+        The string <c>()</c>.
+      </returns>
+      <remarks>
+        <para>
+          For more details, see the <see href="https://github.com/Sunlix-Software/Sunlix.NET.DDD.BaseTypes/blob/main/README.md">official documentation</see>.
+        </para>
+      </remarks>
+    </member>
+
+    <!-- ======= Documentation for UnitExtensions class ======= -->
+    <member name="T:UnitExtensions">
+      <summary>
+        Provides extension methods for working with <see cref="Unit"/> in tasks and delegates.
+      </summary>
+      <remarks>
+        <para>
+          These helpers are convenient when adapting APIs that expect <c>Task&lt;T&gt;</c> or <c>Func&lt;T1,...,Tn&gt;</c>,
+          while the operation conceptually returns no value.
+        </para>
+        <para>
+          For more details, see the <see href="https://github.com/Sunlix-Software/Sunlix.NET.DDD.BaseTypes/blob/main/README.md">official documentation</see>.
+        </para>
+      </remarks>
+    </member>
+
+    <!-- ======= Documentation for AsUnitTask(this Task) method ======= -->
+    <member name="M:AsUnitTask(System.Threading.Tasks.Task)">
+      <summary>
+        Converts a non-generic <see cref="System.Threading.Tasks.Task"/> into a <see cref="System.Threading.Tasks.Task{TResult}"/> of <see cref="Unit"/>.
+      </summary>
+      <param name="task">The task to await.</param>
+      <returns>
+        A <see cref="System.Threading.Tasks.Task{TResult}"/> that completes when <paramref name="task"/> completes and yields <see cref="Unit.value"/>.
+      </returns>
+      <remarks>
+        <para>
+          Any exception thrown by <paramref name="task"/> is propagated.
+        </para>
+      <para>
+        For more details, see the <see href="https://github.com/Sunlix-Software/Sunlix.NET.DDD.BaseTypes/blob/main/README.md">official documentation</see>.
+      </para>
+      </remarks>
+    </member>
+
+    <!-- ======= Documentation for AsUnitFunc<TResult>(this Action<TResult>) method ======= -->
+    <member name="M:AsUnitFunc``1(System.Action{``0})">
+      <summary>
+        Wraps an <see cref="System.Action{T}"/> into a <see cref="System.Func{T,TResult}"/> that returns <see cref="Unit"/>.
+      </summary>
+      <typeparam name="TResult">The parameter type of the action.</typeparam>
+      <param name="action">The action to execute.</param>
+      <returns>
+        A <see cref="System.Func{T,TResult}">Func&lt;TResult, Unit&gt;</see> that invokes <paramref name="action"/> and then returns <see cref="Unit.value"/>.
+      </returns>
+      <remarks>
+        <para>
+          For more details, see the <see href="https://github.com/Sunlix-Software/Sunlix.NET.DDD.BaseTypes/blob/main/README.md">official documentation</see>.
+        </para>
+      </remarks>
+    </member>
+
+    <!-- ======= Documentation for AsUnitFunc(this Action) method ======= -->
+    <member name="M:AsUnitFunc(System.Action)">
+      <summary>
+        Wraps a parameterless <see cref="System.Action"/> into a <see cref="System.Func{T}"/> that returns <see cref="Unit"/>.
+      </summary>
+      <param name="action">The action to execute.</param>
+      <returns>
+        A <see cref="System.Func{T}">Func&lt;Unit&gt;</see> that invokes <paramref name="action"/> and then returns <see cref="Unit.value"/>.
+      </returns>
+      <remarks>
+        <para>
+          For more details, see the <see href="https://github.com/Sunlix-Software/Sunlix.NET.DDD.BaseTypes/blob/main/README.md">official documentation</see>.
+        </para>
+      </remarks>
+    </member>
+
+  </members>
+</doc>
