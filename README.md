@@ -18,7 +18,8 @@
   - [Entity\<TId>](#entitytid)  
   - [ValueObject](#valueobject)  
   - [Enumeration\<T>](#enumerationt)  
-  - [Error](#error)  
+  - [Error](#error)
+  - [Unit](#unit) 
 - [License](#license)  
 - [Contributing](#contributing)  
 
@@ -192,8 +193,7 @@ public readonly record struct Result<T>(T? Value, Error? Error)
 
 public static class Errors
 {
-    public static readonly Error InvalidEmail
-        => new("user.invalid_email", "Email format is invalid.");
+    public static readonly Error InvalidEmail = new("user.invalid_email", "Email format is invalid.");
 
     public static Error NotFound(string entity, object id)
         => new("common.not_found", $"{entity} with id '{id}' was not found.");
@@ -205,6 +205,31 @@ public Result<User> Register(string email)
     // ...
     return Result<User>.Ok(new User(/*...*/));
 }       
+```
+### Unit
+
+`Unit` is a lightweight structure that represents the **absence of a meaningful result**. Unlike void, it can be used as a proper type in generics and functional pipelines, which makes it especially **useful in functional programming**. All instances of `Unit` are **equal and interchangeable**, with a single canonical instance exposed as `Unit.value`. This allows APIs to return `Unit` when no data is needed but a return type is required, ensuring type safety and consistency across layers.
+
+#### Example: Unit in Result record
+
+```csharp
+public readonly record struct Result<T>(T? Value, Error? Error)
+{
+    public bool IsSuccess => Error is null;
+    public static Result<T> Ok(T value) => new(value, null);
+    public static Result<T> Fail(Error e) => new(default, e);
+}
+
+public Result<Unit> Save(User user)
+{
+    if (user.IsValid)
+    {
+        // perform save logic
+        return Result<Unit>.Ok(Unit.value);
+    }
+
+    return Result<Unit>.Fail(new Error("invalid_user", "User validation failed"));
+}
 ```
 
 ## License
