@@ -11,7 +11,7 @@
   <code>Entity</code>, <code>ValueObject</code>, <code>Enumeration</code>, <code>Error</code> and <code>Unit</code>. These primitives help developers write more expressive, consistent, and maintainable domain logic while reducing boilerplate code. The library is framework-agnostic, making it suitable for use in microservices, monoliths, and modular applications
 </p>
 
-## Table of contents
+## Table of Contents
 - [Why this library](#why-this-library)
 - [Installation](#installation)  
 - [Usage](#usage)  
@@ -24,7 +24,7 @@
 - [License](#license)  
 - [Contributing](#contributing)
 
-## Why this library
+## Why this Library
 
 * **Less boilerplate** — concise base types for entities and value objects.
 * **Clear equality semantics** — identity-based for entities, structural for value objects.
@@ -66,7 +66,7 @@ public sealed class Book : Entity<Guid>
 }
 
 // Usage
-var book = new Book(Guid.NewGuid());
+var book = new Book(Guid.NewGuid(), "Domain-Driven Design");
 context.Books.Add(book);
 await context.SaveChangesAsync();              // Id is assigned by application   
 ```
@@ -97,7 +97,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
         bookBuilder.ToTable("Books").HasKey(b => b.Id);
         bookBuilder.Property(b => b.Id)
             .ValueGeneratedOnAdd();
-            /*.UseIdentityColumn();             // use the IDENTITY feature to generate entity Id
+            /*.UseIdentityColumn();*/           // use the IDENTITY feature to generate entity Id
     });
 }
 
@@ -107,7 +107,7 @@ context.Books.Add(book);
 await context.SaveChangesAsync();              // Id populated by EF Core
 ```
 
-#### Proxy note (EF Core & NHibernate).
+#### Proxy Note (EF Core & NHibernate).
 ORMs create lazy-loading proxies for loaded objects. The entity base class default implementation `UnproxiedType => GetType()` will return the proxy type, not the domain type in this scenario. Since `IdEqualityComparer` compares entities by `UnproxiedType + Id`, a proxy and a non-proxy instance of the same entity may compare as different if you keep the default. You can override `UnproxiedType` to overcome this issue.
 
 To avoid this, override `UnproxiedType` in the derived class to return the real domain type:
@@ -218,7 +218,11 @@ public Result<User> Register(string email)
 ```
 ### Unit
 
-`Unit` is a lightweight structure that represents the **absence of a meaningful result**. Unlike void, it can be used as a proper type in generics and functional pipelines, which makes it especially **useful in functional programming**. All instances of `Unit` are **equal and interchangeable**, with a single canonical instance exposed as `Unit.value`. This allows APIs to return `Unit` when no data is needed but a return type is required, ensuring type safety and consistency across layers.
+`Unit` is a lightweight structure that represents the **absence of a meaningful result** — essentially a semantic alternative to `void`.  
+This pattern is well-known in functional programming and has direct analogies in other ecosystems, such as [System.Reactive.Unit](https://learn.microsoft.com/en-us/previous-versions/dotnet/reactive-extensions/hh229189(v=vs.103)) in .NET and [`unit`](https://learn.microsoft.com/en-us/dotnet/fsharp/language-reference/unit-type) in F#. 
+
+Unlike void, it can be used as a proper type in generics and functional pipelines. All instances of `Unit` are **equal and interchangeable**, with a single canonical instance exposed as `Unit.value`. This allows APIs to return `Unit` when no data is needed but a return type is required, ensuring type safety and consistency across layers.
+
 
 **Example:**
 
@@ -242,6 +246,7 @@ public Result<Unit> Save(User user)
 }
 ```
 ## FAQ
+
 <details>
   <summary>Is the library compatible with ORMs (e.g., Entity Framework Core, NHibernate)?</summary><br/>
   
@@ -274,11 +279,11 @@ var set = new HashSet<Book>(Entity<Book>.IdEqualityComparer)
 </details>
 
 <details>
-  <summary>What is <code>UnproxiedType</code> and when should I override it?</summary>
+  <summary>What is <code>UnproxiedType</code> and when should I override it?</summary><br/>
 
 In lazy-loading scenarios, ORMs such as *Entity Framework Core* and *NHibernate* substitute the real domain object with a dynamically generated proxy. As a result, calling `GetType()` on such an object will return the proxy type instead of the actual domain type.  Since both `Entity<TId>.IdEqualityComparer` and `ValueObject.Equals` use the **type** as part of their equality checks, comparing a proxy instance to a real domain instance will lead to false negatives.  
 
-To address this, `Entity<TId>` and `ValueObject` base classes rely on a virtual property `UnproxiedType` for equality checks, which by default simply calls `GetType()`. You can override it in a derived class to always return the real domain type, ensuring consistent equality behavior.
+To address this, `Entity<TId>` and `ValueObject` base classes rely on a virtual property `UnproxiedType` for equality checks, which by default simply calls `GetType()`. You can override it in a derived class to always return the real domain type, ensuring consistent equality behavior (this also applies to `Enumeration<T>` and `Error`, since they inherit from `ValueObject`).
 
 **Example:**
 
@@ -298,7 +303,7 @@ public sealed class Book : Entity<int>
     }
 
     // Ensures equality checks are not broken by EF/NHibernate proxies
-    protected override Type UnproxiedType => typeof(Order);
+    protected override Type UnproxiedType => typeof(Book);
 }
 ```
 
@@ -326,6 +331,98 @@ public sealed class BankTransferPayment : Payment
 }
 ```
 Here, `CreditCardPayment` and `BankTransferPayment` will compare equal if their Ids match, because equality is based on the shared conceptual type `Payment`.
+</details>
+
+<details>
+  <summary>How does equality work for value objects and why should I override <code>GetEqualityComponents()</code>?</summary><br/>
+
+Value objects are compared **structurally** rather than by identity. Two value objects are considered equal if they share the same conceptual type (`UnproxiedType`) and all components returned by `GetEqualityComponents()` are equal in both value and order. Every `ValueObject` must override the protected method `GetEqualityComponents()`, which specifies which properties participate in equality and hash code calculation.
+
+For example, consider the `Error` class from this library:
+
+```csharp
+public class Error : ValueObject
+{
+    public string Code { get; }
+    public string Message { get; }
+
+    public Error(string code, string message) => (Code, Message) = (code, message);
+
+    protected override IEnumerable<object> GetEqualityComponents()
+    {
+        yield return Code;
+    }
+
+    public override string ToString() => $"{Code}: {Message}";
+}
+```
+Here, only `Code` participates in equality, meaning two `Error` instances with the same code are considered equal, even if their messages differ. This design makes sense because the code uniquely identifies the error, while the message is just a human-readable description.
+
+If you omit or incorrectly specify components in `GetEqualityComponents()`, equality and hash codes may become inconsistent, leading to subtle bugs when using value objects in collections such as `HashSet` or `Dictionary`.
+</details>
+
+<details>
+  <summary>Why use <code>Enumeration&lt;T&gt;</code> instead of a regular <code>enum</code>?</summary><br/>
+
+A regular C# `enum` is just a set of named integers. It cannot carry additional behavior. This often leads to **scattered switch statements** across the codebase, where logic is duplicated for each `enum` value.
+
+`Enumeration<T>`, on the other hand, is a **class-based pattern**:
+- Each option is a **strongly typed singleton** with its own properties and methods.  
+- It can encapsulate **domain-specific behavior**, avoiding large `switch`/`if` blocks.  
+- It is **extensible**: you can add methods, invariants, or additional fields without breaking equality semantics.  
+
+Example — imagine we model tax categories:
+
+```csharp
+// Using enum:
+public enum TaxCategory
+{
+    Standard,
+    Reduced,
+    Zero
+}
+
+public decimal ApplyTax(decimal net, TaxCategory category)
+{
+    return category switch
+    {
+        TaxCategory.Standard => Math.Round(net * 1.20m, 2),
+        TaxCategory.Reduced  => Math.Round(net * 1.10m, 2),
+        TaxCategory.Zero     => net,
+        _ => throw new ArgumentOutOfRangeException(nameof(category))
+    };
+}
+```
+This works, but every time we need tax logic, we must repeat the same switch statement.
+
+With `Enumeration<T>`:
+
+```csharp
+public sealed class TaxCategory : Enumeration<TaxCategory>
+{
+    private TaxCategory(int value, string name, decimal rate) : base(value, name)
+        => Rate = rate;
+
+    public decimal Rate { get; }
+    public decimal ApplyTax(decimal net) => Math.Round(net * (1 + Rate), 2);
+
+    public static readonly TaxCategory Standard = new(0, "Standard", 0.20m);
+    public static readonly TaxCategory Reduced  = new(1, "Reduced",  0.10m);
+    public static readonly TaxCategory Zero     = new(2, "Zero",     0.00m);
+}
+
+// Usage:
+var gross = TaxCategory.Reduced.ApplyTax(100m); // 110.00
+```
+</details>
+
+<details>
+  <summary>How does <code>Enumeration&lt;T&gt;</code> prevent duplicate <code>Value</code> / <code>Name</code>?</summary><br/>
+
+`Enumeration<T>` uses **reflection** to discover all `public static` fields declared on the derived enumeration type.  
+The results are cached, but initialization is **lazy** — it happens only on the first call to methods such as `GetAll`, `FromValue`, `FromName`, etc. During this initialization, all items are validated. If two instances share the same `Value` or `Name`, an `InvalidOperationException` is thrown.  
+  
+This helps to prevent subtle bugs from conflicting constants, and provides O(1) lookups by `Value`/`Name` after the initial validation.  
 </details>
 
 ## License
