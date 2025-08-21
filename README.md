@@ -12,7 +12,6 @@
 </p>
 
 ## Table of contents
-## Table of Contents
 - [Installation](#installation)  
 - [Usage](#usage)  
   - [Entity\<TId>](#entitytid)  
