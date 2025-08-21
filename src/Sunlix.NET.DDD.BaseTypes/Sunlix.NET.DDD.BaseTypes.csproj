@@ -8,7 +8,7 @@
 
   <PropertyGroup>
     <PackageId>Sunlix.NET.DDD.BaseTypes</PackageId>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
     <Authors>Igor Bzovsky</Authors>
     <Company>Sunlix</Company>
     <Description>Sunlix.NET.DDD.BaseTypes is a lightweight and extensible library designed for building robust domain models in C#. It provides a clean foundation for implementing Domain-Driven Design (DDD) patterns by introducing essential base types: Entity, ValueObject, Enumeration, Error and Unit.</Description>
@@ -22,7 +22,6 @@
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <PackageReleaseNotes>
-      - Added Unit type for handling the absence of a meaningful result
       - Updated documentation
     </PackageReleaseNotes>
   </PropertyGroup>
