@@ -12,15 +12,26 @@
 </p>
 
 ## Table of contents
+- [Why this library](#why-this-library)
 - [Installation](#installation)  
 - [Usage](#usage)  
   - [Entity\<TId>](#entitytid)  
   - [ValueObject](#valueobject)  
   - [Enumeration\<T>](#enumerationt)  
   - [Error](#error)
-  - [Unit](#unit) 
+  - [Unit](#unit)
+- [FAQ](#faq)
 - [License](#license)  
-- [Contributing](#contributing)  
+- [Contributing](#contributing)
+
+## Why this library
+
+* **Less boilerplate** — concise base types for entities and value objects.
+* **Clear equality semantics** — identity-based for entities, structural for value objects.
+* **Extensible enumerations** — strongly typed, with both data and behavior.
+* **Consistent error model** — an `Error` type for representing validation failures and business rule violations instead of relying on exceptions.  
+* **ORM-friendly** — supports ORMs such as Entity Framework Core and NHibernate; includes safe patterns for lazy-loading proxies and DB-generated identifiers.
+* **Addresses common pitfalls** — the implementation handles issues developers often hit when rolling their own (e.g., equality traps, proxy type mismatches, inconsistent hash codes).
 
 ## Installation
 You can install the package via NuGet:
@@ -36,7 +47,7 @@ Entities represent domain concepts that must be individually tracked over time. 
 
 Whether two entity instances **are “the same” depends on context**. Two objects can refer to the same business entity yet carry different snapshots of state (staleness, out-of-date caches). We don’t override `Equals` on `Entity<TId>`. Instead we provide a domain service `Entity<TId>.IdEqualityComparer` which compares entities by `UnproxiedType` and `Id`.
 
-#### Example: Entity with app-assigned id
+**Example: Entity with app-assigned id**
 
 ```csharp
 public sealed class Book : Entity<Guid>
@@ -55,12 +66,12 @@ public sealed class Book : Entity<Guid>
 }
 
 // Usage
-var user = new User(Guid.NewGuid());
-context.Users.Add(user);
+var book = new Book(Guid.NewGuid());
+context.Books.Add(book);
 await context.SaveChangesAsync();              // Id is assigned by application   
 ```
 
-#### Example: Entity with DB-generated id
+**Example: Entity with DB-generated id**
 
 ```csharp
 public sealed class Book : Entity<int>
@@ -86,7 +97,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
         bookBuilder.ToTable("Books").HasKey(b => b.Id);
         bookBuilder.Property(b => b.Id)
             .ValueGeneratedOnAdd();
-            /*.UseIdentityColumn();             // use the IDENTITY feature to generate entity Id*/
+            /*.UseIdentityColumn();             // use the IDENTITY feature to generate entity Id
     });
 }
 
@@ -102,9 +113,9 @@ ORMs create lazy-loading proxies for loaded objects. The entity base class defau
 To avoid this, override `UnproxiedType` in the derived class to return the real domain type:
 
 ```csharp
-public sealed class Order : Entity<int>
+public sealed class Book : Entity<int>
 {
-    protected override Type UnproxiedType => typeof(Order);
+    protected override Type UnproxiedType => typeof(Book);
 }
 ```
 
@@ -115,7 +126,7 @@ A value object models a descriptive aspect of the domain rather than a distinct,
 
 Value objects should also be **validated and normalized at creation (fail fast)**, often enforcing invariants like ranges, formats, or canonical representations (e.g., uppercased currency codes). They can also be composed into larger value objects (e.g., an `Address` built from `Street`, `City`, and `PostalCode`).
 
-#### Example: Simple value object
+**Example:**
 
 ```csharp
 public sealed class Money : ValueObject
@@ -154,7 +165,7 @@ An `Enumeration<T>` represents a closed set of named values that carry domain me
 
 Equality is based on the `UnproxiedType` and the numeric `Value`. Use an `Enumeration<T>` when the domain requires a fixed, named set of options that can also enforce invariants or provide behavior, making it more expressive than a basic enum.
 
-#### Example: Enumeration with behaviour
+**Example:**
 
 ```csharp
 public sealed class TaxCategory : Enumeration<TaxCategory>
@@ -180,7 +191,7 @@ An `Error` is a lightweight value object that encapsulates a code and a descript
 
 Equality is based on the `UnproxiedType` and `Code`, making them stable for logging, comparison, or transport across layers. Use `Error` when you need a consistent and predictable way to propagate domain or application failures, especially when they are part of normal business logic rather than unexpected runtime faults.
 
-#### Example: Validation error
+**Example:**
 
 ```csharp
 public readonly record struct Result<T>(T? Value, Error? Error)
@@ -209,7 +220,7 @@ public Result<User> Register(string email)
 
 `Unit` is a lightweight structure that represents the **absence of a meaningful result**. Unlike void, it can be used as a proper type in generics and functional pipelines, which makes it especially **useful in functional programming**. All instances of `Unit` are **equal and interchangeable**, with a single canonical instance exposed as `Unit.value`. This allows APIs to return `Unit` when no data is needed but a return type is required, ensuring type safety and consistency across layers.
 
-#### Example: Unit in Result record
+**Example:**
 
 ```csharp
 public readonly record struct Result<T>(T? Value, Error? Error)
@@ -230,6 +241,92 @@ public Result<Unit> Save(User user)
     return Result<Unit>.Fail(new Error("invalid_user", "User validation failed"));
 }
 ```
+## FAQ
+<details>
+  <summary>Is the library compatible with ORMs (e.g., Entity Framework Core, NHibernate)?</summary><br/>
+  
+  Yes. The base types are designed to be **ORM-friendly**:
+
+- **Parameterless constructors** are provided to support ORMs (e.g., EF Core, NHibernate) that rely on them for materialization.    
+- **Database-generated identifiers** are naturally supported: `Entity<TId>` can be created with a default identifier and be populated by the ORM on save.  
+</details>
+
+<details>
+  <summary>Why doesn’t <code>Entity&lt;TId&gt;</code> override <code>Equals</code>?</summary><br/>
+
+Although entities are identified by their unique Id, entity equality and Id equality are not the same thing. Two entities may share the same Id but represent different snapshots of state — for example, due to database inconsistencies, stale data in caches, or concurrent updates. Whether such entities should be considered “equal” is **context-dependent**.  
+
+For this reason, `Equals` is **not overridden** on `Entity<TId>`. Instead, the library provides a domain service `Entity<TId>.IdEqualityComparer`, which compares entities by their `Id` and `UnproxiedType` (to handle ORM proxies safely). This comparer can also be used in collections (e.g., `HashSet`, `Dictionary`) when equality by `Id` is required.  
+
+**Example:**
+
+```csharp
+var same = Entity<Book>.IdEqualityComparer.Equals(book1, book2);
+```
+
+```csharp
+var set = new HashSet<Book>(Entity<Book>.IdEqualityComparer)
+{
+    book1,
+    book2
+};
+```
+</details>
+
+<details>
+  <summary>What is <code>UnproxiedType</code> and when should I override it?</summary>
+
+In lazy-loading scenarios, ORMs such as *Entity Framework Core* and *NHibernate* substitute the real domain object with a dynamically generated proxy. As a result, calling `GetType()` on such an object will return the proxy type instead of the actual domain type.  Since both `Entity<TId>.IdEqualityComparer` and `ValueObject.Equals` use the **type** as part of their equality checks, comparing a proxy instance to a real domain instance will lead to false negatives.  
+
+To address this, `Entity<TId>` and `ValueObject` base classes rely on a virtual property `UnproxiedType` for equality checks, which by default simply calls `GetType()`. You can override it in a derived class to always return the real domain type, ensuring consistent equality behavior.
+
+**Example:**
+
+```csharp
+public sealed class Book : Entity<int>
+{
+    public string Title { get; private set; } = string.Empty;
+
+    // Parameterless constructor for ORM
+    private Book() { }
+
+    public Book(string title)
+    {
+        if (string.IsNullOrEmpty(title))
+            throw new ArgumentOutOfRangeException(nameof(title));
+        Title = title;
+    }
+
+    // Ensures equality checks are not broken by EF/NHibernate proxies
+    protected override Type UnproxiedType => typeof(Order);
+}
+```
+
+This mechanism is also useful in **inheritance hierarchies**. Sometimes, two entities of different CLR types should be considered conceptually the *same* domain type. By overriding `UnproxiedType`, you can unify them for equality checks:
+
+**Example:**
+
+```csharp
+public abstract class Payment : Entity<Guid>
+{
+    protected Payment(Guid id) : base(id) { }
+
+    // Treat all Payment subclasses as one conceptual type
+    protected override Type UnproxiedType => typeof(Payment);
+}
+
+public sealed class CreditCardPayment : Payment
+{
+    public CreditCardPayment(Guid id) : base(id) { }
+}
+
+public sealed class BankTransferPayment : Payment
+{
+    public BankTransferPayment(Guid id) : base(id) { }
+}
+```
+Here, `CreditCardPayment` and `BankTransferPayment` will compare equal if their Ids match, because equality is based on the shared conceptual type `Payment`.
+</details>
 
 ## License
 Sunlix.NET.DDD.BaseTypes is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
