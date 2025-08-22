@@ -8,7 +8,7 @@
   <img src="https://raw.githubusercontent.com/Sunlix-Software/Sunlix.NET.DDD.BaseTypes/main/src/Sunlix.NET.DDD.BaseTypes/assets/sunlix.png" width="130" align="left" style="margin-right: 15px;"/>
   <strong>Sunlix.NET.DDD.BaseTypes</strong> is a lightweight and extensible library designed for building robust domain models in C#.  
   It provides a clean foundation for implementing Domain-Driven Design (DDD) patterns by introducing essential base types:  
-  <code>Entity</code>, <code>ValueObject</code>, <code>Enumeration</code>, <code>Error</code> and <code>Unit</code>. These primitives help developers write more expressive, consistent, and maintainable domain logic while reducing boilerplate code. The library is framework-agnostic, making it suitable for use in microservices, monoliths, and modular applications
+  <code>Entity</code>, <code>ValueObject</code>, <code>Enumeration</code>, <code>Error</code> and <code>Unit</code>. These primitives help developers write more expressive, consistent, and maintainable domain logic while reducing boilerplate code. The library is framework-agnostic, making it suitable for use in microservices, monoliths, and modular applications.
 </p>
 
 ## Table of Contents
@@ -122,7 +122,7 @@ public sealed class Book : Entity<int>
 ### ValueObject
 A value object models a descriptive aspect of the domain rather than a distinct, trackable thing. Typical examples include money amounts, dates and ranges, measurements, addresses, and email addresses. Unlike entities, value objects have **no identity**: two instances with the same values are fully interchangeable. They are **immutable** — any modification produces a new instance, which simplifies reasoning, avoids side effects, and ensures safe sharing. Value objects are **ephemeral**: they are created where needed, passed around, and discarded. The domain doesn’t care about their history, only the value they hold at the moment.
 
-**Equality is structural**: two value objects are equal if they share the same `UnproxiedType` and all components returned by `GetEqualityComponents() `are equal in length, order, and value. Hash codes are derived from these components, enabling correct use in sets and dictionaries.
+**Equality is structural**: two value objects are equal if they share the same `UnproxiedType` and all components returned by `GetEqualityComponents()` are equal in length, order, and value. Hash codes are derived from these components, enabling correct use in sets and dictionaries.
 
 Value objects should also be **validated and normalized at creation (fail fast)**, often enforcing invariants like ranges, formats, or canonical representations (e.g., uppercased currency codes). They can also be composed into larger value objects (e.g., an `Address` built from `Street`, `City`, and `PostalCode`).
 
@@ -419,8 +419,7 @@ var gross = TaxCategory.Reduced.ApplyTax(100m); // 110.00
 <details>
   <summary>How does <code>Enumeration&lt;T&gt;</code> prevent duplicate <code>Value</code> / <code>Name</code>?</summary><br/>
 
-`Enumeration<T>` uses **reflection** to discover all `public static` fields declared on the derived enumeration type.  
-The results are cached, but initialization is **lazy** — it happens only on the first call to methods such as `GetAll`, `FromValue`, `FromName`, etc. During this initialization, all items are validated. If two instances share the same `Value` or `Name`, an `InvalidOperationException` is thrown.  
+`Enumeration<T>` uses **reflection** to discover all `public static` fields declared on the derived enumeration type. The results are cached, but initialization is **lazy** — it happens only on the first call to methods such as `GetAll`, `FromValue`, `FromName`, etc. During this initialization, all items are validated. If two instances share the same `Value` or `Name`, an `InvalidOperationException` is thrown.  
   
 This helps to prevent subtle bugs from conflicting constants, and provides O(1) lookups by `Value`/`Name` after the initial validation.  
 </details>
