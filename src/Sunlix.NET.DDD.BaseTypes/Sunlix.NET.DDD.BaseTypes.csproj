@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
+    <TargetFrameworks>net6.0;net8.0;net9.0</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
@@ -23,18 +23,20 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <NoWarn>$(NoWarn);1591</NoWarn>
-    <PackageReleaseNotes>
-      - Updated documentation
+    <PackageReleaseNotes>## [1.0.4] - 2025-08-24
+### Changed
+- `Entity&lt;TId&gt;.IsTransient` converted from method to property.
+- Added support for .NET 6.0 and .NET 8.0.
+
+### Fixed
+- Fixed XML documentation.
     </PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
     <None Include="assets\sunlix.png" Pack="true" PackagePath="" />
     <None Include="README.md" Pack="true" PackagePath="" />
-    <None Include="$(OutputPath)$(AssemblyName).xml"
-        Pack="true"
-        PackagePath="lib/$(TargetFramework)/"
-        Condition="Exists('$(OutputPath)$(AssemblyName).xml')" />
+    <None Include="$(OutputPath)$(AssemblyName).xml" Pack="true" PackagePath="lib/$(TargetFramework)/" Condition="Exists('$(OutputPath)$(AssemblyName).xml')" />
   </ItemGroup>
 
 </Project>

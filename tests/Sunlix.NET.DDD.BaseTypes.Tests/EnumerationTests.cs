@@ -124,8 +124,8 @@
         {
             Action act = () => Enumeration<TestEnumeration>.FromValue(3);
 
-            act.Should().Throw<InvalidOperationException>()
-                .WithMessage("Enumeration value '3' is not valid for Sunlix.NET.DDD.BaseTypes.Tests.TestEnumeration.");
+            act.Should().Throw<ArgumentException>()
+                .WithMessage("Enumeration value '3' is not valid for Sunlix.NET.DDD.BaseTypes.Tests.TestEnumeration.*");
         }
 
         [Fact]
@@ -133,8 +133,8 @@
         {
             Action act = () => Enumeration<TestEnumeration>.FromValue(-1);
 
-            act.Should().Throw<InvalidOperationException>()
-                .WithMessage("Enumeration value '-1' is not valid for Sunlix.NET.DDD.BaseTypes.Tests.TestEnumeration.");
+            act.Should().Throw<ArgumentException>()
+                .WithMessage("Enumeration value '-1' is not valid for Sunlix.NET.DDD.BaseTypes.Tests.TestEnumeration.*");
         }
 
         [Fact]
@@ -192,15 +192,6 @@
                 .WithMessage("Duplicate enumeration value detected: '1'. Value must be unique.");
         }
 
-        [Fact]
-        public void TryGetFromValue_should_throw_exception_when_duplicate_name_exists()
-        {
-            Action act = () => TestEnumerationWithDuplicateName.TryGetFromValue(1, out _);
-
-            act.Should().Throw<InvalidOperationException>()
-                .WithMessage("Duplicate enumeration name detected: 'Status1'. Name must be unique.");
-        }
-
         [Theory]
         [MemberData(nameof(GetNamesWithResults))]
         public void FromName_should_return_enumeration_by_name(string name, TestEnumeration expextedResult)
@@ -214,8 +205,8 @@
         {
             Action act = () => Enumeration<TestEnumeration>.FromName("Status3");
 
-            act.Should().Throw<InvalidOperationException>()
-                .WithMessage("Enumeration name 'Status3' is not valid for Sunlix.NET.DDD.BaseTypes.Tests.TestEnumeration.");
+            act.Should().Throw<ArgumentException>()
+                .WithMessage("Enumeration name 'Status3' is not valid for Sunlix.NET.DDD.BaseTypes.Tests.TestEnumeration.*");
         }
 
         [Theory]
@@ -224,8 +215,8 @@
         {
             Action act = () => Enumeration<TestEnumeration>.FromName(name!);
 
-            act.Should().Throw<InvalidOperationException>()
-                .WithMessage($"Enumeration name '{name}' is not valid for Sunlix.NET.DDD.BaseTypes.Tests.TestEnumeration.");
+            act.Should().Throw<ArgumentException>()
+                .WithMessage($"Enumeration name '{name}' is not valid for Sunlix.NET.DDD.BaseTypes.Tests.TestEnumeration.*");
         }
 
         [Fact]

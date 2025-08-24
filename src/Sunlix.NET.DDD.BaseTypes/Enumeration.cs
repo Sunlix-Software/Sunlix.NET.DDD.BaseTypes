@@ -36,7 +36,7 @@ namespace Sunlix.NET.DDD.BaseTypes
         {
             return TryGetFromValue(value, out T? enumeration)
                 ? enumeration!
-                : throw new InvalidOperationException($"Enumeration value '{value}' is not valid for {typeof(T)}.");
+                : throw new ArgumentException($"Enumeration value '{value}' is not valid for {typeof(T)}.", nameof(value));
         }
 
         /// <include file="XmlDocs/Enumeration.xml" path="doc/members/member[@name='M:Sunlix.NET.DDD.BaseTypes.Enumeration`1.TryGetFromValue(System.Int32,T@)']/*" />
@@ -56,7 +56,7 @@ namespace Sunlix.NET.DDD.BaseTypes
         {
             return TryGetFromName(name, out T? enumeration)
                 ? enumeration!
-                : throw new InvalidOperationException($"Enumeration name '{name}' is not valid for {typeof(T)}.");
+                : throw new ArgumentException($"Enumeration name '{name}' is not valid for {typeof(T)}.", nameof(name));
         }
 
         /// <include file="XmlDocs/Enumeration.xml" path="doc/members/member[@name='M:Sunlix.NET.DDD.BaseTypes.Enumeration`1.TryGetFromName(System.String,T@)']/*" />

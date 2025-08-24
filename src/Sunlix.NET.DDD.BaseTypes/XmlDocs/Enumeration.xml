@@ -82,14 +82,14 @@
       </returns>
       <remarks>
         <para>
-          Throws <see cref="System.InvalidOperationException"/> if no enumeration instance with the specified
+          Throws <see cref="System.ArgumentException"/> if no enumeration instance with the specified
           <paramref name="value"/> exists in the derived type.
         </para>
         <para>
           For more details, see the <see href="https://github.com/Sunlix-Software/Sunlix.NET.DDD.BaseTypes/blob/main/README.md">official documentation</see>.
         </para>
       </remarks>
-      <exception cref="System.InvalidOperationException"></exception>
+      <exception cref="System.ArgumentException"></exception>
     </member>
 
     <!-- ======= Documentation for TryGetFromValue(int, out T) method ======= -->
@@ -120,14 +120,14 @@
       </returns>
       <remarks>
         <para>
-          Throws <see cref="System.InvalidOperationException"/> if no enumeration instance with the specified
+          Throws <see cref="System.ArgumentException"/> if no enumeration instance with the specified
           <paramref name="name"/> exists in the derived type.
         </para>
         <para>
           For more details, see the <see href="https://github.com/Sunlix-Software/Sunlix.NET.DDD.BaseTypes/blob/main/README.md">official documentation</see>.
         </para>
       </remarks>
-      <exception cref="System.InvalidOperationException"></exception>
+      <exception cref="System.ArgumentException"></exception>
     </member>
 
     <!-- ======= Documentation for TryGetFromName(string, out T) method ======= -->
