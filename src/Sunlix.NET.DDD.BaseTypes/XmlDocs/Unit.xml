@@ -3,7 +3,7 @@
   <members>
 
     <!-- ======= Documentation for Unit struct ======= -->
-    <member name="T:Unit">
+    <member name="T:Sunlix.NET.DDD.BaseTypes.Unit">
       <summary>
         Represents a <i>unit</i> value — a type that carries no information and has a single inhabitant.
       </summary>
@@ -19,7 +19,7 @@
     </member>
 
     <!-- ======= Documentation for Unit.value field ======= -->
-    <member name="F:value">
+    <member name="F:Sunlix.NET.DDD.BaseTypes.Unit.value">
       <summary>
         The canonical unit value. All <see cref="Unit"/> instances are equal to this value.
       </summary>
@@ -34,7 +34,7 @@
     </member>
 
     <!-- ======= Documentation for Equals(Unit) method ======= -->
-    <member name="M:Equals(Unit)">
+    <member name="M:Sunlix.NET.DDD.BaseTypes.Unit.Equals(Unit)">
       <summary>
         Determines whether the specified <see cref="Unit"/> is equal to the current instance.
       </summary>
@@ -52,7 +52,7 @@
     </member>
 
     <!-- ======= Documentation for Equals(object) method ======= -->
-    <member name="M:Equals(System.Object)">
+    <member name="M:Sunlix.NET.DDD.BaseTypes.Unit.Equals(System.Object)">
       <summary>
         Determines whether the specified object is a <see cref="Unit"/> and thus equal to the current instance.
       </summary>
@@ -68,7 +68,7 @@
     </member>
 
     <!-- ======= Documentation for GetHashCode method ======= -->
-    <member name="M:GetHashCode">
+    <member name="M:Sunlix.NET.DDD.BaseTypes.Unit.GetHashCode">
       <summary>
         Returns a hash code for the current <see cref="Unit"/>.
       </summary>
@@ -83,7 +83,7 @@
     </member>
 
     <!-- ======= Documentation for ToString method ======= -->
-    <member name="M:ToString">
+    <member name="M:Sunlix.NET.DDD.BaseTypes.Unit.ToString">
       <summary>
         Returns a string that represents the current <see cref="Unit"/>.
       </summary>
@@ -98,7 +98,7 @@
     </member>
 
     <!-- ======= Documentation for UnitExtensions class ======= -->
-    <member name="T:UnitExtensions">
+    <member name="T:Sunlix.NET.DDD.BaseTypes.UnitExtensions">
       <summary>
         Provides extension methods for working with <see cref="Unit"/> in tasks and delegates.
       </summary>
@@ -114,7 +114,7 @@
     </member>
 
     <!-- ======= Documentation for AsUnitTask(this Task) method ======= -->
-    <member name="M:AsUnitTask(System.Threading.Tasks.Task)">
+    <member name="M:Sunlix.NET.DDD.BaseTypes.UnitExtensions.AsUnitTask(System.Threading.Tasks.Task)">
       <summary>
         Converts a non-generic <see cref="System.Threading.Tasks.Task"/> into a <see cref="System.Threading.Tasks.Task{TResult}"/> of <see cref="Unit"/>.
       </summary>
@@ -133,7 +133,7 @@
     </member>
 
     <!-- ======= Documentation for AsUnitFunc<TResult>(this Action<TResult>) method ======= -->
-    <member name="M:AsUnitFunc``1(System.Action{``0})">
+    <member name="M:Sunlix.NET.DDD.BaseTypes.UnitExtensions.AsUnitFunc``1(System.Action{``0})">
       <summary>
         Wraps an <see cref="System.Action{T}"/> into a <see cref="System.Func{T,TResult}"/> that returns <see cref="Unit"/>.
       </summary>
@@ -150,7 +150,7 @@
     </member>
 
     <!-- ======= Documentation for AsUnitFunc(this Action) method ======= -->
-    <member name="M:AsUnitFunc(System.Action)">
+    <member name="M:Sunlix.NET.DDD.BaseTypes.UnitExtensions.AsUnitFunc(System.Action)">
       <summary>
         Wraps a parameterless <see cref="System.Action"/> into a <see cref="System.Func{T}"/> that returns <see cref="Unit"/>.
       </summary>
@@ -162,6 +162,44 @@
         <para>
           For more details, see the <see href="https://github.com/Sunlix-Software/Sunlix.NET.DDD.BaseTypes/blob/main/README.md">official documentation</see>.
         </para>
+      </remarks>
+    </member>
+
+    <!-- ======= Documentation for equality operator ======= -->
+    <member name="M:Sunlix.NET.DDD.BaseTypes.Unit.op_Equality(Sunlix.NET.DDD.BaseTypes.Unit,Sunlix.NET.DDD.BaseTypes.Unit)">
+      <summary>
+        Determines whether two <see cref="T:Sunlix.NET.DDD.BaseTypes.Unit"/> values are equal.
+      </summary>
+      <param name="left">
+        The left <see cref="T:Sunlix.NET.DDD.BaseTypes.Unit"/> operand.
+      </param>
+      <param name="right">
+        The right <see cref="T:Sunlix.NET.DDD.BaseTypes.Unit"/> operand.
+      </param>
+      <returns>
+        Always <c>true</c>, because all <see cref="T:Sunlix.NET.DDD.BaseTypes.Unit"/> values are equal.
+      </returns>
+      <remarks>
+        This operator is provided for syntactic convenience when comparing <see cref="T:Sunlix.NET.DDD.BaseTypes.Unit"/> values.
+      </remarks>
+    </member>
+
+    <!-- ======= Documentation for inequality operator ======= -->
+    <member name="M:Sunlix.NET.DDD.BaseTypes.Unit.op_Inequality(Sunlix.NET.DDD.BaseTypes.Unit,Sunlix.NET.DDD.BaseTypes.Unit)">
+      <summary>
+        Determines whether two <see cref="T:Sunlix.NET.DDD.BaseTypes.Unit"/> values are not equal.
+      </summary>
+      <param name="left">
+        The left <see cref="T:Sunlix.NET.DDD.BaseTypes.Unit"/> operand.
+      </param>
+      <param name="right">
+        The right <see cref="T:Sunlix.NET.DDD.BaseTypes.Unit"/> operand.
+      </param>
+      <returns>
+        Always <c>false</c>, because all <see cref="T:Sunlix.NET.DDD.BaseTypes.Unit"/> values are equal.
+      </returns>
+      <remarks>
+        This operator is provided for syntactic convenience when comparing <see cref="T:Sunlix.NET.DDD.BaseTypes.Unit"/> values.
       </remarks>
     </member>
 

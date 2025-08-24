@@ -3,7 +3,7 @@
   <members>
 
     <!-- ======= Documentation for Error class ======= -->
-    <member name="T:Error">
+    <member name="T:Sunlix.NET.DDD.BaseTypes.Error">
       <summary>
         Value object that represents an error with a <see cref="Code"/> and a descriptive <see cref="Message"/>.
       </summary>
@@ -18,7 +18,7 @@
     </member>
 
     <!-- ======= Documentation for Code property ======= -->
-    <member name="P:Code">
+    <member name="P:Sunlix.NET.DDD.BaseTypes.Error.Code">
       <summary>
         Gets the error code that identifies the type of error.
       </summary>
@@ -30,7 +30,7 @@
     </member>
 
     <!-- ======= Documentation for Message property ======= -->
-    <member name="P:Message">
+    <member name="P:Sunlix.NET.DDD.BaseTypes.Error.Message">
       <summary>
         Gets the descriptive message associated with the error.
       </summary>
@@ -42,7 +42,7 @@
     </member>
 
     <!-- ======= Documentation for constructor Error(string, string) ======= -->
-    <member name="M:Error.#ctor(System.String,System.String)">
+    <member name="M:Sunlix.NET.DDD.BaseTypes.Error.#ctor(System.String,System.String)">
       <summary>
         Initializes a new instance of the <see cref="Error"/> class with a specified error code and message.
       </summary>
@@ -56,7 +56,7 @@
     </member>
 
     <!-- ======= Documentation for GetEqualityComponents() method ======= -->
-    <member name="M:GetEqualityComponents">
+    <member name="M:Sunlix.NET.DDD.BaseTypes.Error.GetEqualityComponents">
       <summary>
         Returns the sequence of components used to determine equality for this enumeration.
       </summary>
@@ -75,7 +75,7 @@
     </member>
 
     <!-- ======= Documentation for ToString() method ======= -->
-    <member name="M:ToString">
+    <member name="M:Sunlix.NET.DDD.BaseTypes.Error.ToString">
       <summary>
         Returns a string representation of the error in the format "<see cref="Code"/>: <see cref="Message"/>".
       </summary>

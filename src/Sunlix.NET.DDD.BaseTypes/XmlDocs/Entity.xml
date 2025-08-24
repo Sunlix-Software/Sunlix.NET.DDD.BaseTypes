@@ -3,7 +3,7 @@
   <members>
 
     <!-- ======= Documentation for Entity<TId> class ======= -->
-    <member name="T:Entity">
+    <member name="T:Sunlix.NET.DDD.BaseTypes.Entity`1">
       <summary>
         Represents the base class for all entities in the domain model.
       </summary>
@@ -19,7 +19,7 @@
     </member>
 
     <!-- ======= Documentation for constructor Entity() ======= -->
-    <member name="M:Entity.#ctor">
+    <member name="M:Sunlix.NET.DDD.BaseTypes.Entity`1.#ctor">
       <summary>
         Initializes a new instance of the <see cref="Entity{TId}"/> class.
       </summary>
@@ -34,7 +34,7 @@
     </member>
 
     <!-- ======= Documentation for constructor Entity(TId) ======= -->
-    <member name="M:Entity.#ctor(`0)">
+    <member name="M:Sunlix.NET.DDD.BaseTypes.Entity`1.#ctor(`0)">
       <summary>
         Initializes a new instance of the <see cref="Entity{TId}"/> class with the specified identifier.
       </summary>
@@ -50,7 +50,7 @@
     </member>
 
     <!-- ======= Documentation for Id property ======= -->
-    <member name="P:Entity.Id">
+    <member name="P:Sunlix.NET.DDD.BaseTypes.Entity`1.Id">
       <summary>
         Unique identifier of the entity.
       </summary>
@@ -65,7 +65,7 @@
     </member>
 
     <!-- ======= Documentation for UnproxiedType property ======= -->
-    <member name="P:UnproxiedType">
+    <member name="P:Sunlix.NET.DDD.BaseTypes.Entity`1.UnproxiedType">
       <summary>
         Gets the type used to determine equality between entities.
       </summary>
@@ -87,7 +87,7 @@
     </member>
 
     <!-- ======= Documentation for IdEqualityComparer property ======= -->
-    <member name="P:IdEqualityComparer">
+    <member name="P:Sunlix.NET.DDD.BaseTypes.Entity`1.IdEqualityComparer">
       <summary>
         Provides the equality comparer that determines equality of entities by their <see cref="UnproxiedType"/> and <see cref="Id"/>.
       </summary>
@@ -103,7 +103,7 @@
     </member>
 
     <!-- ======= Documentation for IsTransient() method ======= -->
-    <member name="M:IsTransient">
+    <member name="P:Sunlix.NET.DDD.BaseTypes.Entity`1.IsTransient">
       <summary>
         Determines whether the current entity is <em>transient</em>, meaning it has not been assigned a persistent identifier.
       </summary>

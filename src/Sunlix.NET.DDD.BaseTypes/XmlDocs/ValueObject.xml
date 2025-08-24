@@ -3,7 +3,7 @@
   <members>
 
     <!-- ======= Documentation for ValueObject class ======= -->
-    <member name="T:ValueObject">
+    <member name="T:Sunlix.NET.DDD.BaseTypes.ValueObject">
       <summary>
         Represents the base class for all value objects in the domain model.
       </summary>
@@ -15,7 +15,7 @@
     </member>
 
     <!-- ======= Documentation for Equals(ValueObject) method ======= -->
-    <member name="M:Equals(ValueObject)">
+    <member name="M:Sunlix.NET.DDD.BaseTypes.ValueObject.Equals(ValueObject)">
       <summary>
         Determines whether <paramref name="other"/> is equal to this value object according to its equality contract.
       </summary>
@@ -57,7 +57,7 @@
     </member>
 
     <!-- ======= Documentation for Equals(System.Object?) method ======= -->
-    <member name="M:Equals(System.Object)">
+    <member name="M:Sunlix.NET.DDD.BaseTypes.ValueObject.Equals(System.Object)">
       <summary>
         Determines whether the specified <see cref="object"/> is equal to the current instance.
       </summary>
@@ -99,7 +99,7 @@
     </member>
 
     <!-- ======= Documentation for GetHashCode method ======= -->
-    <member name="M:GetHashCode">
+    <member name="M:Sunlix.NET.DDD.BaseTypes.ValueObject.GetHashCode">
       <summary>
         Returns a hash code for the current <see cref="ValueObject"/>.
       </summary>
@@ -116,7 +116,7 @@
     </member>
 
     <!-- ======= Documentation for UnproxiedType property ======= -->
-    <member name="P:UnproxiedType">
+    <member name="P:Sunlix.NET.DDD.BaseTypes.ValueObject.UnproxiedType">
       <summary>
         Gets the type used to determine equality between value objects.
       </summary>
@@ -138,7 +138,7 @@
     </member>
 
     <!-- ======= Documentation for GetEqualityComponents method ======= -->
-    <member name="M:GetEqualityComponents">
+    <member name="M:Sunlix.NET.DDD.BaseTypes.ValueObject.GetEqualityComponents">
       <summary>
         Returns the sequence of components that are used to determine equality for this <see cref="ValueObject"/>.
       </summary>
@@ -156,6 +156,41 @@
         </para>
         <para>
           For more details, see the <see href="https://github.com/Sunlix-Software/Sunlix.NET.DDD.BaseTypes/blob/main/README.md">official documentation</see>.
+        </para>
+      </remarks>
+    </member>
+
+    <!-- ======= Documentation for equality operator ======= -->
+    <member name="M:Sunlix.NET.DDD.BaseTypes.ValueObject.op_Equality(Sunlix.NET.DDD.BaseTypes.ValueObject,Sunlix.NET.DDD.BaseTypes.ValueObject)">
+      <summary>
+        Determines whether two <see cref="T:Sunlix.NET.DDD.BaseTypes.ValueObject"/> instances are equal.
+      </summary>
+      <param name="left">The first value object to compare.</param>
+      <param name="right">The second value object to compare.</param>
+      <returns>
+        <c>true</c> if both are <c>null</c> or if <paramref name="left"/> is equal to <paramref name="right"/>
+        according to <see cref="M:Sunlix.NET.DDD.BaseTypes.ValueObject.Equals(Sunlix.NET.DDD.BaseTypes.ValueObject)"/>; otherwise, <c>false</c>.
+      </returns>
+      <remarks>
+        <para>
+          This operator delegates to <see cref="M:Sunlix.NET.DDD.BaseTypes.ValueObject.Equals(Sunlix.NET.DDD.BaseTypes.ValueObject)"/>.
+        </para>
+      </remarks>
+    </member>
+
+    <!-- ======= Documentation for inequality operator ======= -->
+    <member name="M:Sunlix.NET.DDD.BaseTypes.ValueObject.op_Inequality(Sunlix.NET.DDD.BaseTypes.ValueObject,Sunlix.NET.DDD.BaseTypes.ValueObject)">
+      <summary>
+        Determines whether two <see cref="T:Sunlix.NET.DDD.BaseTypes.ValueObject"/> instances are not equal.
+      </summary>
+      <param name="left">The first value object to compare.</param>
+      <param name="right">The second value object to compare.</param>
+      <returns>
+        <c>true</c> if the objects are not equal; otherwise, <c>false</c>.
+      </returns>
+      <remarks>
+        <para>
+          This operator is the logical negation of <see cref="M:Sunlix.NET.DDD.BaseTypes.ValueObject.op_Equality(Sunlix.NET.DDD.BaseTypes.ValueObject,Sunlix.NET.DDD.BaseTypes.ValueObject)"/>.
         </para>
       </remarks>
     </member>

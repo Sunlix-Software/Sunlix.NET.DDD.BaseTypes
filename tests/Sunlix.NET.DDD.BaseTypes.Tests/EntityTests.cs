@@ -8,7 +8,7 @@
             where TId : IEquatable<TId>
         {
             sut.Id.Should().Be(id);
-            sut.IsTransient().Should().BeFalse();
+            sut.IsTransient.Should().BeFalse();
         }
 
         [Theory]
@@ -17,7 +17,7 @@
             where TId : IEquatable<TId>
         {
             sut.Id.Should().Be(id);
-            sut.IsTransient().Should().BeTrue();
+            sut.IsTransient.Should().BeTrue();
         }
 
         public class TestEntity<TId> : Entity<TId> where TId : IEquatable<TId>

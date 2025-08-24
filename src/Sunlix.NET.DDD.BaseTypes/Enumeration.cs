@@ -2,7 +2,7 @@
 
 namespace Sunlix.NET.DDD.BaseTypes
 {
-    /// <include file="XmlDocs/Enumeration.xml" path="doc/members/member[@name='T:Enumeration']/*" />
+    /// <include file="XmlDocs/Enumeration.xml" path="doc/members/member[@name='T:Sunlix.NET.DDD.BaseTypes.Enumeration`1']/*" />
     public abstract class Enumeration<T> : ValueObject, IComparable, IComparable<Enumeration<T>>
         where T : Enumeration<T>
     {
@@ -17,13 +17,13 @@ namespace Sunlix.NET.DDD.BaseTypes
         private static IReadOnlyDictionary<int, T> EnumerationValues => EnumerationValuesLazy.Value;
         private static IReadOnlyDictionary<string, T> EnumerationNames => EnumerationNamesLazy.Value;
 
-        /// <include file="XmlDocs/Enumeration.xml" path="doc/members/member[@name='P:Value']/*" />
+        /// <include file="XmlDocs/Enumeration.xml" path="doc/members/member[@name='P:Sunlix.NET.DDD.BaseTypes.Enumeration`1.Value']/*" />
         public int Value { get; init; }
 
-        /// <include file="XmlDocs/Enumeration.xml" path="doc/members/member[@name='P:Name']/*" />
+        /// <include file="XmlDocs/Enumeration.xml" path="doc/members/member[@name='P:Sunlix.NET.DDD.BaseTypes.Enumeration`1.Name']/*" />
         public string Name { get; init; }
 
-        /// <include file="XmlDocs/Enumeration.xml" path="doc/members/member[@name='M:Enumeration.#ctor(System.Int32,System.String)']/*" />
+        /// <include file="XmlDocs/Enumeration.xml" path="doc/members/member[@name='M:Sunlix.NET.DDD.BaseTypes.Enumeration`1.#ctor(System.Int32,System.String)']/*" />
         protected Enumeration(int value, string name)
         {
             Validate(value, name);
@@ -31,7 +31,7 @@ namespace Sunlix.NET.DDD.BaseTypes
             Name = name;
         }
 
-        /// <include file="XmlDocs/Enumeration.xml" path="doc/members/member[@name='M:FromValue(System.Int32)']/*" />
+        /// <include file="XmlDocs/Enumeration.xml" path="doc/members/member[@name='M:Sunlix.NET.DDD.BaseTypes.Enumeration`1.FromValue(System.Int32)']/*" />
         public static T FromValue(int value)
         {
             return TryGetFromValue(value, out T? enumeration)
@@ -39,7 +39,7 @@ namespace Sunlix.NET.DDD.BaseTypes
                 : throw new InvalidOperationException($"Enumeration value '{value}' is not valid for {typeof(T)}.");
         }
 
-        /// <include file="XmlDocs/Enumeration.xml" path="doc/members/member[@name='M:TryGetFromValue(System.Int32,T@)']/*" />
+        /// <include file="XmlDocs/Enumeration.xml" path="doc/members/member[@name='M:Sunlix.NET.DDD.BaseTypes.Enumeration`1.TryGetFromValue(System.Int32,T@)']/*" />
         public static bool TryGetFromValue(int value, out T? enumeration)
         {
             if (value < 0)
@@ -51,7 +51,7 @@ namespace Sunlix.NET.DDD.BaseTypes
             return EnumerationValues.TryGetValue(value, out enumeration);
         }
 
-        /// <include file="XmlDocs/Enumeration.xml" path="doc/members/member[@name='M:FromName(System.String)']/*" />
+        /// <include file="XmlDocs/Enumeration.xml" path="doc/members/member[@name='M:Sunlix.NET.DDD.BaseTypes.Enumeration`1.FromName(System.String)']/*" />
         public static T FromName(string name)
         {
             return TryGetFromName(name, out T? enumeration)
@@ -59,7 +59,7 @@ namespace Sunlix.NET.DDD.BaseTypes
                 : throw new InvalidOperationException($"Enumeration name '{name}' is not valid for {typeof(T)}.");
         }
 
-        /// <include file="XmlDocs/Enumeration.xml" path="doc/members/member[@name='M:TryGetFromName(System.String,T@)']/*" />
+        /// <include file="XmlDocs/Enumeration.xml" path="doc/members/member[@name='M:Sunlix.NET.DDD.BaseTypes.Enumeration`1.TryGetFromName(System.String,T@)']/*" />
         public static bool TryGetFromName(string name, out T? enumeration)
         {
             if (string.IsNullOrWhiteSpace(name))
@@ -70,19 +70,19 @@ namespace Sunlix.NET.DDD.BaseTypes
             return EnumerationNames.TryGetValue(name, out enumeration);
         }
 
-        /// <include file="XmlDocs/Enumeration.xml" path="doc/members/member[@name='M:Exists(System.Int32)']/*" />
+        /// <include file="XmlDocs/Enumeration.xml" path="doc/members/member[@name='M:Sunlix.NET.DDD.BaseTypes.Enumeration`1.Exists(System.Int32)']/*" />
         public static bool Exists(int value) => EnumerationValues.ContainsKey(value);
 
-        /// <include file="XmlDocs/Enumeration.xml" path="doc/members/member[@name='M:Exists(System.String)']/*" />
+        /// <include file="XmlDocs/Enumeration.xml" path="doc/members/member[@name='M:Sunlix.NET.DDD.BaseTypes.Enumeration`1.Exists(System.String)']/*" />
         public static bool Exists(string name) => TryGetFromName(name, out _);
 
-        /// <include file="XmlDocs/Enumeration.xml" path="doc/members/member[@name='M:Enumeration.GetAll']/*" />
+        /// <include file="XmlDocs/Enumeration.xml" path="doc/members/member[@name='M:Sunlix.NET.DDD.BaseTypes.Enumeration`1.GetAll']/*" />
         public static IEnumerable<T> GetAll() => EnumerationValues.Values;
 
-        /// <include file="XmlDocs/Enumeration.xml" path="doc/members/member[@name='M:Enumeration.CompareTo(Enumeration)']/*" />
+        /// <include file="XmlDocs/Enumeration.xml" path="doc/members/member[@name='M:Sunlix.NET.DDD.BaseTypes.Enumeration`1.CompareTo(Enumeration)']/*" />
         public int CompareTo(Enumeration<T>? other) => other is null ? 1 : Value.CompareTo(other.Value);
 
-        /// <include file="XmlDocs/Enumeration.xml" path="doc/members/member[@name='M:Enumeration.CompareTo(System.Object)']/*" />
+        /// <include file="XmlDocs/Enumeration.xml" path="doc/members/member[@name='M:Sunlix.NET.DDD.BaseTypes.Enumeration`1.CompareTo(System.Object)']/*" />
         public int CompareTo(object? obj)
         {
             if (obj is null) return 1;
@@ -92,10 +92,10 @@ namespace Sunlix.NET.DDD.BaseTypes
             return CompareTo(other);
         }
 
-        /// <include file="XmlDocs/Enumeration.xml" path="doc/members/member[@name='M:ToString']/*" />
+        /// <include file="XmlDocs/Enumeration.xml" path="doc/members/member[@name='M:Sunlix.NET.DDD.BaseTypes.Enumeration`1.ToString']/*" />
         public override string ToString() => Name;
 
-        /// <include file="XmlDocs/Enumeration.xml" path="doc/members/member[@name='M:GetEqualityComponents']/*" />
+        /// <include file="XmlDocs/Enumeration.xml" path="doc/members/member[@name='M:Sunlix.NET.DDD.BaseTypes.Enumeration`1.GetEqualityComponents']/*" />
         protected override IEnumerable<object> GetEqualityComponents()
         {
             yield return Value;

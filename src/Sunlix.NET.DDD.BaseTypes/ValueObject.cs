@@ -1,14 +1,14 @@
 ﻿namespace Sunlix.NET.DDD.BaseTypes
 {
-    /// <include file="XmlDocs/ValueObject.xml" path="doc/members/member[@name='T:ValueObject']/*" />
+    /// <include file="XmlDocs/ValueObject.xml" path="doc/members/member[@name='T:Sunlix.NET.DDD.BaseTypes.ValueObject']/*" />
     public abstract class ValueObject : IEquatable<ValueObject>
     {
         private int? _cachedHashCode;
 
-        /// <include file="XmlDocs/ValueObject.xml" path="doc/members/member[@name='P:UnproxiedType']/*" />
+        /// <include file="XmlDocs/ValueObject.xml" path="doc/members/member[@name='P:Sunlix.NET.DDD.BaseTypes.ValueObject.UnproxiedType']/*" />
         protected virtual Type UnproxiedType => GetType();
 
-        /// <include file="XmlDocs/ValueObject.xml" path="doc/members/member[@name='M:Equals(ValueObject)']/*" />
+        /// <include file="XmlDocs/ValueObject.xml" path="doc/members/member[@name='M:Sunlix.NET.DDD.BaseTypes.ValueObject.Equals(ValueObject)']/*" />
         public virtual bool Equals(ValueObject? other)
         {
             if (other is null) return false;
@@ -17,11 +17,11 @@
             return SatisfiesStructuralEquality(other);
         }
 
-        /// <include file="XmlDocs/ValueObject.xml" path="doc/members/member[@name='M:Equals(System.Object)']/*" />
+        /// <include file="XmlDocs/ValueObject.xml" path="doc/members/member[@name='M:Sunlix.NET.DDD.BaseTypes.ValueObject.Equals(System.Object)']/*" />
         public override bool Equals(object? obj)
             => obj is ValueObject other && Equals(other);
 
-        /// <include file="XmlDocs/ValueObject.xml" path="doc/members/member[@name='M:GetHashCode']/*" />
+        /// <include file="XmlDocs/ValueObject.xml" path="doc/members/member[@name='M:Sunlix.NET.DDD.BaseTypes.ValueObject.GetHashCode']/*" />
         public override int GetHashCode()
         {
             if (_cachedHashCode.HasValue) return _cachedHashCode.Value;
@@ -36,12 +36,14 @@
             return _cachedHashCode.Value;
         }
 
-        /// <include file="XmlDocs/ValueObject.xml" path="doc/members/member[@name='M:GetEqualityComponents']/*" />
+        /// <include file="XmlDocs/ValueObject.xml" path="doc/members/member[@name='M:Sunlix.NET.DDD.BaseTypes.ValueObject.GetEqualityComponents']/*" />
         protected abstract IEnumerable<object> GetEqualityComponents();
 
+        /// <include file="XmlDocs/ValueObject.xml" path="doc/members/member[@name='M:Sunlix.NET.DDD.BaseTypes.ValueObject.op_Equality(Sunlix.NET.DDD.BaseTypes.ValueObject,Sunlix.NET.DDD.BaseTypes.ValueObject)']/*" />
         public static bool operator ==(ValueObject? left, ValueObject? right)
             => left is null ? right is null : left.Equals(right);
 
+        /// <include file="XmlDocs/ValueObject.xml" path="doc/members/member[@name='M:Sunlix.NET.DDD.BaseTypes.ValueObject.op_Inequality(Sunlix.NET.DDD.BaseTypes.ValueObject,Sunlix.NET.DDD.BaseTypes.ValueObject)']/*" />
         public static bool operator !=(ValueObject? left, ValueObject? right)
             => !(left == right);
 

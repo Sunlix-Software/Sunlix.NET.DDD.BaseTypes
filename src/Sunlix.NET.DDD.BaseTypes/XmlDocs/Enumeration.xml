@@ -3,7 +3,7 @@
   <members>
 
     <!-- ======= Documentation for Enumeration<T> class ======= -->
-    <member name="T:Enumeration">
+    <member name="T:Sunlix.NET.DDD.BaseTypes.Enumeration`1">
       <summary>
         Represents a base class for defining enumeration-like objects with named values.
       </summary>
@@ -20,7 +20,7 @@
     </member>
 
     <!-- ======= Documentation for Value property ======= -->
-    <member name="P:Value">
+    <member name="P:Sunlix.NET.DDD.BaseTypes.Enumeration`1.Value">
       <summary>
         Gets the numeric value associated with the enumeration instance.
       </summary>
@@ -33,7 +33,7 @@
     </member>
 
     <!-- ======= Documentation for Name property ======= -->
-    <member name="P:Name">
+    <member name="P:Sunlix.NET.DDD.BaseTypes.Enumeration`1.Name">
       <summary>
         Gets the name associated with the enumeration instance.
       </summary>
@@ -46,7 +46,7 @@
     </member>
     
     <!-- ======= Documentation for Enumeration(int, string) constructor ======= -->
-    <member name="M:Enumeration.#ctor(System.Int32,System.String)">
+    <member name="M:Sunlix.NET.DDD.BaseTypes.Enumeration`1.#ctor(System.Int32,System.String)">
       <summary>
         Initializes a new instance of the <see cref="Enumeration{T}"/> class with the specified value and display name.
       </summary>
@@ -72,7 +72,7 @@
 
 
     <!-- ======= Documentation for FromValue(int) method ======= -->
-    <member name="M:FromValue(System.Int32)">
+    <member name="M:Sunlix.NET.DDD.BaseTypes.Enumeration`1.FromValue(System.Int32)">
       <summary>
         Retrieves an enumeration instance based on its numeric value.
       </summary>
@@ -93,7 +93,7 @@
     </member>
 
     <!-- ======= Documentation for TryGetFromValue(int, out T) method ======= -->
-    <member name="M:TryGetFromValue(System.Int32,T@)">
+    <member name="M:Sunlix.NET.DDD.BaseTypes.Enumeration`1.TryGetFromValue(System.Int32,T@)">
       <summary>
         Attempts to retrieve an enumeration instance based on its numeric value.
       </summary>
@@ -110,7 +110,7 @@
     </member>
 
     <!-- ======= Documentation for FromName(string) method ======= -->
-    <member name="M:FromName(System.String)">
+    <member name="M:Sunlix.NET.DDD.BaseTypes.Enumeration`1.FromName(System.String)">
       <summary>
         Retrieves an enumeration instance based on its name.
       </summary>
@@ -131,7 +131,7 @@
     </member>
 
     <!-- ======= Documentation for TryGetFromName(string, out T) method ======= -->
-    <member name="M:TryGetFromName(System.String,T@)">
+    <member name="M:Sunlix.NET.DDD.BaseTypes.Enumeration`1.TryGetFromName(System.String,T@)">
       <summary>
         Attempts to retrieve an enumeration instance based on its name.
       </summary>
@@ -148,7 +148,7 @@
     </member>
 
     <!-- ======= Documentation for Exists(int) method ======= -->
-    <member name="M:Exists(System.Int32)">
+    <member name="M:Sunlix.NET.DDD.BaseTypes.Enumeration`1.Exists(System.Int32)">
       <summary>
         Determines whether an enumeration instance with the specified numeric value exists.
       </summary>
@@ -164,7 +164,7 @@
     </member>
 
     <!-- ======= Documentation for Exists(string) method ======= -->
-    <member name="M:Exists(System.String)">
+    <member name="M:Sunlix.NET.DDD.BaseTypes.Enumeration`1.Exists(System.String)">
       <summary>
         Determines whether an enumeration instance with the specified name exists.
       </summary>
@@ -180,7 +180,7 @@
     </member>
 
     <!-- ======= Documentation for GetAll() method ======= -->
-    <member name="M:Enumeration.GetAll">
+    <member name="M:Sunlix.NET.DDD.BaseTypes.Enumeration`1.GetAll">
       <summary>
         Retrieves all available enumeration instances of the current type.
       </summary>
@@ -195,7 +195,7 @@
     </member>
 
     <!-- ======= Documentation for CompareTo(Enumeration<T>) method ======= -->
-    <member name="M:Enumeration.CompareTo(Enumeration)">
+    <member name="M:Sunlix.NET.DDD.BaseTypes.Enumeration`1.CompareTo(Enumeration)">
       <summary>
         Compares the current enumeration instance with another instance based on their numeric values.
       </summary>
@@ -211,7 +211,7 @@
     </member>
 
     <!-- ======= Documentation for CompareTo(object?) method ======= -->
-    <member name="M:Enumeration.CompareTo(System.Object)">
+    <member name="M:Sunlix.NET.DDD.BaseTypes.Enumeration`1.CompareTo(System.Object)">
       <summary>
         Compares the current enumeration instance with another object.
       </summary>
@@ -231,7 +231,7 @@
     </member>
 
     <!-- ======= Documentation for ToString() method ======= -->
-    <member name="M:ToString">
+    <member name="M:Sunlix.NET.DDD.BaseTypes.Enumeration`1.ToString">
       <summary>
         Returns the display name of the enumeration instance.
       </summary>
@@ -246,7 +246,7 @@
     </member>
 
     <!-- ======= Documentation for GetEqualityComponents() method ======= -->
-    <member name="M:GetEqualityComponents">
+    <member name="M:Sunlix.NET.DDD.BaseTypes.Enumeration`1.GetEqualityComponents">
       <summary>
         Returns the sequence of components used to determine equality for this enumeration.
       </summary>
