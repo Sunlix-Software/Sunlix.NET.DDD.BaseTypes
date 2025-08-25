@@ -23,12 +23,12 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <NoWarn>$(NoWarn);1591</NoWarn>
-    <PackageReleaseNotes>## [1.0.4] - 2025-08-24
-### Changed
-- `Entity&lt;TId&gt;.IsTransient` converted from method to property.
+    <PackageReleaseNotes>1.0.4 - 2025-08-24
+Changed
+- Entity&lt;TId&gt;.IsTransient converted from method to property.
 - Added support for .NET 6.0 and .NET 8.0.
 
-### Fixed
+Fixed
 - Fixed XML documentation.
     </PackageReleaseNotes>
   </PropertyGroup>

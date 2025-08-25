@@ -24,7 +24,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added XML documentation for public APIs.
 - Packaged with README and license for NuGet distribution.
 
-
-
 [1.0.3]: https://github.com/Sunlix-Software/Sunlix.NET.DDD.BaseTypes/tree/1.0.3
 [1.0.4]: https://github.com/Sunlix-Software/Sunlix.NET.DDD.BaseTypes/tree/1.0.4
