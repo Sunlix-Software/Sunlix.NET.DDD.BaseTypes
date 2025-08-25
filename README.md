@@ -203,7 +203,8 @@ public readonly record struct Result<T>(T? Value, Error? Error)
 
 public static class Errors
 {
-    public static readonly Error InvalidEmail = new("user.invalid_email", "Email format is invalid.");
+    public static Error InvalidEmail()
+        => new("user.invalid_email", "Email format is invalid.");
 
     public static Error NotFound(string entity, object id)
         => new("common.not_found", $"{entity} with id '{id}' was not found.");
@@ -211,7 +212,8 @@ public static class Errors
 
 public Result<User> Register(string email)
 {
-    if (!IsValidEmail(email)) return Result<User>.Fail(Errors.InvalidEmail);
+    if (!IsValidEmail(email))
+        return Result<User>.Fail(Errors.InvalidEmail());
     // ...
     return Result<User>.Ok(new User(/*...*/));
 }       
